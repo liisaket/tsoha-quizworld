@@ -1,0 +1,31 @@
+{% if session.username %}
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Quiz-World - Kirjaudu sisään</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        <form>
+            <h1>Quiz-World</h1>
+            <h3>Kirjaudu sisään</h3>
+            <div class="textBoxdiv">
+                <input type="text" name="username" placeholder="Käyttäjätunnus">
+            </div>
+            <div class="textBoxdiv">
+                <input type="password" name="password" placeholder="Salasana">
+            </div>
+            <input type="submit" value="Kirjaudu sisään" class="loginBtn">
+            <div class="signup">
+                Tai jos sinulla ei ole käyttäjätunnusta:
+                </br>
+                <a href="register">Rekisteröidy</a>
+            </div>
+        </form>
+    </body>
+</html>
+{% endif %}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Quiz-World - Rekisteröidy</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        <form action="/register" method="post">
+            <h3>Rekisteröinti</h3>
+            <div class="textBoxdiv">
+                <input type="text" name="username" placeholder="Käyttäjätunnus" minlength="1" maxlength="20">
+            </div>
+            <div class="textBoxdiv">
+                <input type="password" name="password1" placeholder="Salasana">
+            </div>
+            <div class="textBoxdiv">
+                <input type="password" name="password2" placeholder="Salasana uudelleen">
+            </div>
+            <div class="textBoxdiv">
+                <input type="role" placeholder="Käyttäjärooli:">
+                <select name="role">
+                <option value=1> käyttäjä
+                <option value=2> ylläpitäjä
+                </select>
+            </div>
+                <input type="submit" value="Luo tunnus" class="loginBtn">
+            <div class="signup">
+                <a href="/">Palaa takaisin</a>
+            </div>
+        </form>
+    </body>
+</html>
