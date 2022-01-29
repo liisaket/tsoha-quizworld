@@ -46,6 +46,16 @@ h3 {
     height: 30px;
     font-size: 20px;
 }
+.textBoxdiv select{
+    background-color: white;
+    border: none;
+    outline: none;
+    width: 100%;
+    color: #686868ce;
+    height: 30px;
+    font-size: 20px;
+}
+
 .loginBtn{
     height: 45px;
     width: 100%;
@@ -66,5 +76,6 @@ h3 {
     text-align: center;
 }
 .signup a{
-    color: black;
+    color: rgb(253, 231, 235);
+    text-decoration: underline;
 }
