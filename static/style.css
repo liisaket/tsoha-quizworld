@@ -19,6 +19,19 @@ form {
     top: 50%;
     transform: translate(-50%,-50%);
 }
+p {
+    text-align: center;
+    margin-bottom: 45px;
+    color: white;
+    font-size: 17px;
+}
+.role {
+    color: #686868ce;
+    font-size: 20px;
+    position: relative;
+    margin: 10px 0;
+    text-align: left;
+}
 h1 {
     text-align: center;
     margin-bottom: 45px;
@@ -46,6 +59,15 @@ h3 {
     height: 30px;
     font-size: 20px;
 }
+.textBoxdiv a{
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    color: white;
+    height: 30px;
+    font-size: 20px;
+}
 .textBoxdiv select{
     background-color: white;
     border: none;
@@ -63,6 +85,10 @@ h3 {
     outline: none;
     background: linear-gradient(to right top, rgb(198, 247, 198), rgb(216, 158, 216), rgb(255, 211, 218), rgb(192, 213, 243), white);
     background-size: 200%;
+    color: white;
+    font-size: 16px;
+}
+.loginTxt{
     color: white;
     font-size: 16px;
 }
