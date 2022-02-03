@@ -6,6 +6,12 @@
         <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
+        {% if session.username %}
+        <p>Olet jo kirjautunut sisään nimellä {{ session.username }}</p>
+        <div class="signup">
+            <a href="/">Takaisin etusivulle</a>
+        </div>
+        {% else %}
         <form action="/register" method="post">
             <h3>Rekisteröinti</h3>
             <div class="textBoxdiv">
@@ -18,10 +24,10 @@
                 <input type="password" name="password2" placeholder="Salasana uudelleen">
             </div>
             <div class="textBoxdiv">
-                <input type="role" placeholder="Käyttäjärooli:">
+                <p class="role">Käyttäjärooli:</p>
                 <select name="role">
-                <option value=1> käyttäjä
-                <option value=2> ylläpitäjä
+                    <option value=1>käyttäjä</option>
+                    <option value=2>ylläpitäjä</option>
                 </select>
             </div>
                 <input type="submit" value="Luo tunnus" class="loginBtn">
@@ -31,3 +37,4 @@
         </form>
     </body>
 </html>
+{% endif %}
