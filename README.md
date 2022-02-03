@@ -1,10 +1,10 @@
 # tsoha-quizworld
 Tietokantasovellus
 
-- Sovellukseni on Quiz-World. Nimestäkin voi päätellä, että sovelluksessa on kyselyitä eri aiheista,
-  kuten jalkapallosta, musiikista, julkkisista, tv-sarjoista, horoskoopeista...
-- Sovellukseen pitää rekisteröityä/kirjautua sisään, on olemassa normaali käyttäjä ja ylläpitäjä (ylläpitäjä voi esim. luoda uusia kyselyitä).
-- Käyttäjä voi testata tietojaan aiheista ja tutkia tilastoja.
-- Kyselyiden kysymyksille on aina yksi oikea vastaus. Käyttäjä voi kerätä pisteitä vastaamalla oikein.
-- Tilastot-sivulla voi näkyä esim. käyttäjien pisteet
-- Ulkonäöllisesti haluan tehdä sivustosta värikkään tai käyttää maanläheisiä värejä.
+- Sovellukseni on Quiz-World: paikka, jossa voi vastata erilaisiin kyselyihin.
+- Sovellukseen pitää kirjautua sisään, jotta kyselyt voi nähdä.
+- Sovellukseen voi rekisteröityä, käyttärooleja on 2 (normaali käyttäjä ja ylläpitäjä).
+- Ylläpitäjä voi luoda uusia kyselyitä.
+- Kun on kirjautunut sisään, voi vastata kyselyihin tai tutkia tilastoja.
+- Tilastot: kuinka moneen kyselyyn käyttäjä on vastannut, kuinka moni vastaus on mennyt oikein/väärin.
+- Kyselyiden kysymyksille on aina yksi oikea vastaus.
