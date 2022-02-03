@@ -39,6 +39,13 @@ h1 {
     font-size: 40px;
     text-decoration: underline;
 }
+.error {
+    text-align: center;
+    margin: 15px 0;
+    color: rgb(223, 252, 223);
+    font-size: 30px;
+    border-bottom: 2px solid white;
+}
 h3 {
     text-align: center;
     margin-bottom: 45px;
@@ -98,10 +105,11 @@ h3 {
 }
 .signup{
     color: white;
-    margin-top: 45px;
+    margin-top: 25px;
     text-align: center;
 }
 .signup a{
     color: rgb(253, 231, 235);
     text-decoration: underline;
+    text-align: center;
 }
