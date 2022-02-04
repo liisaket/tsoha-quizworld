@@ -6,18 +6,15 @@
     box-sizing: border-box;
 }
 body {
-    min-height: 100vh;
     background: linear-gradient(to right top, rgb(198, 247, 198), rgb(216, 158, 216), rgb(255, 211, 218), rgb(192, 213, 243), white);
+    min-height: 100vh;
 }
 form {
     background: #bdbcbcce;
-    width: 350px;
-    height: 580px;
+    width: 400px;
+    height: auto;
     padding: 75px 50px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
+    margin: auto;
 }
 p {
     text-align: center;
@@ -44,6 +41,13 @@ h1 {
     margin: 15px 0;
     color: rgb(223, 252, 223);
     font-size: 30px;
+    border-bottom: 2px solid white;
+}
+.new {
+    text-align: center;
+    margin: 5px 0;
+    color: rgb(255, 219, 225);
+    font-size: 25px;
     border-bottom: 2px solid white;
 }
 h3 {
@@ -84,10 +88,19 @@ h3 {
     height: 30px;
     font-size: 20px;
 }
-
 .loginBtn{
     height: 45px;
     width: 100%;
+    border: none;
+    outline: none;
+    background: linear-gradient(to right top, rgb(198, 247, 198), rgb(216, 158, 216), rgb(255, 211, 218), rgb(192, 213, 243), white);
+    background-size: 200%;
+    color: white;
+    font-size: 16px;
+}
+.loginBtn2{
+    height: 45px;
+    width: 50%;
     border: none;
     outline: none;
     background: linear-gradient(to right top, rgb(198, 247, 198), rgb(216, 158, 216), rgb(255, 211, 218), rgb(192, 213, 243), white);
@@ -103,9 +116,14 @@ h3 {
     background-position: right;
     font-size: 17px;
 }
+.loginBtn2:hover{
+    background-position: right;
+    font-size: 17px;
+}
 .signup{
     color: white;
     margin-top: 25px;
+    margin-bottom: 45px;
     text-align: center;
 }
 .signup a{
