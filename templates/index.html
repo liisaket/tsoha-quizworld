@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Quiz-World - Kirjaudu sisään</title>
+        <title>Quiz-World</title>
         <meta charset="utf-8">
         <link rel="stylesheet" href="/static/style.css">
     </head>
@@ -10,8 +10,19 @@
         <form action="/logout">
             <title>Quiz-World</title>
             <h1>Quiz-World</h1>
-            <p>Olet kirjautunut nimellä {{ session.username }}</p>
-            <button type="submit" class="loginBtn">Kirjaudu ulos</button>
+            <p>Olet kirjautunut nimellä {{ session.username }}.</p>
+            <p>Sovelluksessa on tällä hetkellä {{ nmr_of_quizzes }} kyselyä.</p>
+            {% for quiz in available_quizzes %}
+                <div class="signup">
+                    <a href="/quiz/{{ quiz[1] }}">{{ quiz[0]}}</a>
+                </div>
+            {% endfor %}
+            {% if session.role == 2 %}
+            <div class="signup">
+                <a href="/base">Luo uusi kysely</a>
+            </div>
+            {% endif %}
+            <input type="submit" value="Kirjaudu ulos" class="loginBtn">
         </form>
         {% else %}
         <form action="/login" method="POST">
