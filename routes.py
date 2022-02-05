@@ -63,11 +63,33 @@ def new():
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
     if not users.require_role(2):
-        return render_template("error.html", message="Sinulla ei ole oikeuksia luoda kyselyitä", route="/base")
+        return render_template("error.html", message="Sinulla ei ole oikeuksia luoda kyselyitä", route="/")
     topic = request.form["topic"]
     if topic == "" or len(topic) > 20:
         return render_template("error.html", message="Kyselyn aiheessa tulee olla 1-20 merkkiä", route="/base")
     quiz_type = int(request.form["quiz_type"])
+    quiz_id = quizzes.create_quiz(topic, quiz_type)
     nmr_of_questions = int(request.form["nmr_of_questions"])
     nmr_of_choices = int(request.form["nmr_of_choices"])
-    return render_template("newquiz.html", topic=topic, quiz_type=quiz_type, questions=nmr_of_questions, choices=nmr_of_choices)
+    return render_template("newquiz.html", quiz_id=quiz_id, topic=topic, quiz_type=quiz_type, questions=nmr_of_questions, choices=nmr_of_choices)
+
+@app.route("/create", methods=["POST"])
+def create():
+    quiz_id = request.form["quiz_id"]
+    questions = request.form.getlist("question")
+    choices = request.form.getlist("choice")
+    nmr_of_choices = request.form["choices"]
+    correct = request.form.getlist("correct")
+    for question in questions:
+        if question == "" or len(question) > 50:
+            render_template("error.html", message="Kysymyksessä tulee olla 1-50 merkkiä", route="/newquiz")
+    for choice in choices:
+        if choice == "" or len(choice) > 50:
+            render_template("error.html", message="Vaihtoehdossa tulee olla 1-50 merkkiä", route="/newquiz")
+    i = 0
+    for question in questions:
+        question_id = quizzes.create_question(quiz_id, question)
+        for choice in range(int(nmr_of_choices)):
+            quizzes.create_choice(question_id, choices[i], correct[i])
+            i += 1
+    return redirect("/")
