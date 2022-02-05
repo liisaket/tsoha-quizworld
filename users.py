@@ -9,20 +9,19 @@ def login(username,password):
     user = result.fetchone()
     if user == None:
         return False
-    else:
-        if check_password_hash(user[0],password):
-            session["user_id"] = user[1]
-            session["username"] = username
-            session["role"] = user[2]
-            session["csrf_token"] = os.urandom(16).hex()                
-            return True
-        else:
-            return False
+    if not check_password_hash(user[0],password):
+        return False
+    if check_password_hash(user[0],password):
+        session["user_id"] = user[1]
+        session["username"] = username
+        session["role"] = user[2]
+        session["csrf_token"] = os.urandom(16).hex()                
+        return True
 
 def logout():
     del session["user_id"]
-    del session["user_name"]
-    del session["user_role"]
+    del session["username"]
+    del session["role"]
 
 def register(name, password, role):
     hash_value = generate_password_hash(password)
@@ -35,11 +34,13 @@ def register(name, password, role):
     return login(name,password)
 
 def user_id():
-    return session.get("user_id", 0)
+    return session.get("user_id")
 
 def require_role(role):
-    if role > session.get("user_role", 0):
-        abort(403)
+    user_role = session["role"]
+    if user_role != role:
+        return False
+    return True
 
 def check_csrf():
     if session["csrf_token"] != request.form["csrf_token"]:
