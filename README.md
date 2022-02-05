@@ -13,5 +13,8 @@ Tietokantasovellus
 
 Nykyinen tilanne:
 - Sovellukseen voi kirjautua sisään ja rekisteröityä, joko normaalina käyttäjänä tai ylläpitäjänä.
-- Ylläpitäjä voi luoda uuden kyselyn pohjan ja kirjoittaa kysymykset sekä vastaukset kyselylle (virallinen luominen ei vielä toimi)
+- Ylläpitäjä voi luoda uuden kyselyn: joko tietovisan, jossa on oikeita tai vääriä vastauksia, tai mielipidekyselyn,
+  jossa ei ole vääriä vastauksia. Ensin kyselylle luodaan pohja (kyselyn tyyppi, aihe, montako kysymystä ja vastausvaihtoehtoa) ja
+  sitten luodaan itse kysely (sen kysymykset ja vastausvaihtoehdot).
+- Kyselyt näkyvät sovelluksen etusivulla (niihin ei vielä voi vastata).
 - Olen tyytyväinen ulkonäköön ja sovellus toimii jo aika hyvin.
