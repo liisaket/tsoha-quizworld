@@ -16,5 +16,5 @@ Nykyinen tilanne:
 - Ylläpitäjä voi luoda uuden kyselyn: joko tietovisan, jossa on oikeita tai vääriä vastauksia, tai mielipidekyselyn,
   jossa ei ole vääriä vastauksia. Ensin kyselylle luodaan pohja (kyselyn tyyppi, aihe, montako kysymystä ja vastausvaihtoehtoa) ja
   sitten luodaan itse kysely (sen kysymykset ja vastausvaihtoehdot).
-- Kyselyt näkyvät sovelluksen etusivulla (niihin ei vielä voi vastata).
+- Sovelluksen etusivulla (kun on kirjautuneena sisään) näkyy kuinka monta kyselyä on olemassa, ja linkit niihin (niihin ei vielä voi vastata).
 - Olen tyytyväinen ulkonäköön ja sovellus toimii jo aika hyvin.
