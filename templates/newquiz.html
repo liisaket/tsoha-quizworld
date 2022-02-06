@@ -7,16 +7,17 @@
     </head>
     <body>
         <form action="/create" method="POST">
-            {% if session.username %}
+            {% if session.user_id %}
             {% if quiz_type==1 %}
-            <h3 class="new">Uusi tietovisa:<br>{{ topic }}<br></h3>
+            <h3 class="newquiz">Uusi tietovisa:</h3>
+            <h3 class="topic">{{ topic }}</h3>
             {% for i in range(1, questions+1) %}
                 <div class="textBoxdiv">
-                    <input type="text" name="question" placeholder="{{ i }}. Kysymys" minlength="1" maxlength="50">
+                    <input type="text" style="color:lavenderblush" name="question" placeholder="{{ i }}. Kysymys">
                 </div>
                 {% for j in range(1, choices+1) %}
                     <div class="textBoxdiv">
-                        <input type="text" name="choice" placeholder="{{ j }}. Vaihtoehto" minlength="1" maxlength="50">
+                        <input type="text" name="choice" placeholder="{{ j }}. Vaihtoehto">
                     </div>
                     <div class="textBoxdiv">
                         <select name="correct">
@@ -28,25 +29,30 @@
             {% endfor %}
             {% endif %}
             {% if quiz_type==2 %}
-            <h3 class="new">Uusi mielipidekysely:<br>{{ topic }}<br></h3>
+            <h3 class="newquiz">Uusi mielipidekysely:</h3>
+            <h3 class="topic">{{ topic }}</h3>
             {% for i in range(1, questions+1) %}
                 <div class="textBoxdiv">
-                    <input type="text" name="question" placeholder="{{ i }}. Kysymys" minlength="1" maxlength="50">
+                    <input type="text" style="color:lavenderblush" name="question" placeholder="{{ i }}. Kysymys">
                 </div>
                 {% for j in range(1, choices+1) %}
                     <div class="textBoxdiv">
-                        <input type="text" name="choice" placeholder="{{ j }}. Vaihtoehto" minlength="1" maxlength="50">
+                        <input type="text" name="choice" placeholder="{{ j }}. Vaihtoehto">
                         <input type="hidden" name="correct" value="True">
                     </div>
                 {% endfor %}
             {% endfor %}
             {% endif %}
             <button type="submit" class="loginBtn">Luo kysely</button>
+            <input type="hidden" name="topic" value="{{ topic }}">
             <input type="hidden" name="quiz_id" value="{{ quiz_id }}">
             <input type="hidden" name="quiz_type" value="{{ quiz_type }}">
             <input type="hidden" name="choices" value="{{ choices }}">
+            <input type="hidden" name="nmr_of_questions" value="{{ questions }}">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             {% endif %}
-            {% if not session.username %}
+            {% if not session.user_id %}
+            <h1>Quiz-World</h1>
             <p>Et ole kirjautunut sisään.</p>
             {% endif %}
             <div class="signup">
