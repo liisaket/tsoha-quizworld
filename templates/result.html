@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Quiz-World - Kyselyn tulokset</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        <form action="/result" method="POST">
+            {% if session.user_id %}
+                {% if quiz_type==1 %}
+                <h3 class="newquiz">Tietovisan tulokset:</h3>
+                <h3 class="topic">{{ topic }}</h3>
+                <p class="result">Sait {{ right_answers }} / {{ nmr_of_questions }} oikein</p>
+                {% for i in range(nmr_of_questions) %}
+                    <p class="questions">{{ i+1 }}. {{ questions[i][1] }}</p>
+                    {% for choice in choices %}
+                        {% if choice[2] == questions[i][0] and choice[3] == True and choice[0] in user_answers %}
+                            <p class="choice">
+                            <input type="radio" name="{{ questions[i][0] }}" checked> {{ choice[1] }}
+                            </p><br>
+                        {% elif choice[2] == questions[i][0] and choice[3] == True %}
+                            <p class="choice">
+                            <input type="radio" name="{{ questions[i][0] }}" disabled> {{ choice[1] }}
+                            </p><br>
+                        {% elif choice[2] == questions[i][0] and choice[0] in user_answers %}
+                            <p class="choice">
+                            <input type="radio" name="{{ questions[i][0] }}" checked> {{ choice[1] }}
+                            </p><br>
+                        {% elif choice[2] == questions[i][0] %}
+                            <p class="choice">
+                            <input type="radio" name="{{ questions[i][0] }}" disabled> {{ choice[1] }}
+                            </p><br>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                {% else %}
+                <h3 class="newquiz">Mielipidekyselyn tulokset:</h3>
+                <h3 class="topic">{{ topic }}</h3>
+                {% for i in range(nmr_of_questions) %}
+                    <p class="questions">{{ i+1 }}. {{ questions[i][1] }}</p>
+                    {% for choice in choices %}
+                        {% if choice.question_id == questions[i][0] and choice.id in user_answers %}
+                            <p class="choice">
+                            <input type="radio" name="{{ questions[i][0] }}" checked> {{ choice.content }}: {{ choice.count }} kpl
+                            </p><br>
+                        {% elif choice.question_id == questions[i][0] %}
+                            <p class="choice">
+                            <input type="radio" name="{{ questions[i][0] }}" disabled> {{ choice.content }}: {{ choice.count }} kpl
+                            </p><br>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                {% endif %}
+            {% else %}
+            <h1>Quiz-World</h1>
+            <p>Et ole kirjautunut sisään.</p>
+            {% endif %}
+            <div class="signup">
+                <a href="/">Palaa takaisin</a>
+            </div>
+        </form>
+    </body>
+</html>
