@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Quiz-World</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        {% if session.user_id %}
+        <form action="/logout">
+            <title>Quiz-World</title>
+            <h1>Quiz-World</h1>
+            <h3 class="new" style="color: rgb(223, 252, 223)">Tilastot<br></h3>
+        {% else %}
+        <h1>Quiz-World</h1>
+        <p>Et ole kirjautunut sisään.</p>
+        {% endif %}
+        <div class="signup">
+            <a href="/">Palaa takaisin</a>
+        </div>
+        </form>
+    </body>
+</html>
