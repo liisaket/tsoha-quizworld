@@ -19,6 +19,7 @@ Nykyinen tilanne:
 - Sovelluksen etusivulla (kun on kirjautuneena sisään) näkyy kuinka monta kyselyä on olemassa, ja linkit niihin.
 - Käyttäjä voi vastata kyselyihin, ja sen jälkeen näkee kyselyn tulokset (pitää vielä muokata results.html sivua, että tietovisan tuloksissa
   näkyy mikä oli oikea vastaus).
+- Tilastot -sivu kaipaa vielä koodausta.
 - Olen tyytyväinen ulkonäköön ja sovellus toimii jo aika hyvin.
 
 https://tsoha-quizworld.herokuapp.com/
