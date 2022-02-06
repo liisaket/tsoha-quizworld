@@ -7,7 +7,7 @@
     </head>
     <body>
         <form action="/new" method="POST">
-            {% if session.username %}
+            {% if session.user_id %}
             <h3 class="new">Luo uuden kyselyn pohja:<br></h3>
             <div class="textBoxdiv">
                 <input type="text" name="topic" placeholder="Kyselyn aihe" minlength="1" maxlength="20">
@@ -40,7 +40,8 @@
             <button type="submit" class="loginBtn">Luo pohja</button>
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             {% endif %}
-            {% if not session.username %}
+            {% if not session.user_id %}
+            <h1>Quiz-World</h1>
             <p>Et ole kirjautunut sisään.</p>
             {% endif %}
             <div class="signup">
