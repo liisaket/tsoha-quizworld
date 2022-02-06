@@ -22,6 +22,19 @@ p {
     color: white;
     font-size: 17px;
 }
+.choice {
+    text-align: left;
+    margin: 0px;
+    color: white;
+    font-size: 19px;
+}
+.result {
+    text-align: center;
+    margin: 20px;
+    color: rgb(223, 252, 223);
+    font-size: 20px;
+    font-weight: 600;
+}
 .role {
     color: #686868ce;
     font-size: 20px;
@@ -49,6 +62,49 @@ h1 {
     color: rgb(255, 219, 225);
     font-size: 25px;
     border-bottom: 2px solid white;
+}
+.newquiz {
+    text-align: center;
+    margin: 5px 0;
+    color: rgb(255, 219, 225);
+    font-size: 25px;
+}
+.topic {
+    text-align: center;
+    margin: 5px 0;
+    color: lavenderblush;
+    font-size: 30px;
+    border-bottom: 2px solid white;
+}
+.quizzes {
+    text-align: left;
+    margin: 10px;
+    margin-bottom: 5px;
+    color: rgb(227, 237, 252);
+    font-size: 25px;
+    font-weight: 500;
+    border-bottom: 2px solid white;
+}
+.quizlink {
+    text-align: left;
+    color: rgb(227, 237, 252);
+    margin: 5px;
+    font-size: 18px;
+    display: inline;
+}
+.quizlink a{
+    text-align: left;
+    color: rgb(227, 237, 252);
+    display: inline;
+    text-decoration: underline;
+}
+.questions {
+    text-align: left;
+    margin: 30px 0;
+    color: rgb(227, 237, 252);
+    font-size: 20px;
+    font-weight: 500;
+    text-decoration: underline;
 }
 h3 {
     text-align: center;
@@ -96,7 +152,7 @@ h3 {
     background: linear-gradient(to right top, rgb(198, 247, 198), rgb(216, 158, 216), rgb(255, 211, 218), rgb(192, 213, 243), white);
     background-size: 200%;
     color: white;
-    font-size: 16px;
+    font-size: 17px;
 }
 .loginBtn2{
     height: 45px;
@@ -106,28 +162,30 @@ h3 {
     background: linear-gradient(to right top, rgb(198, 247, 198), rgb(216, 158, 216), rgb(255, 211, 218), rgb(192, 213, 243), white);
     background-size: 200%;
     color: white;
-    font-size: 16px;
+    font-size: 17px;
 }
 .loginTxt{
     color: white;
-    font-size: 16px;
+    font-size: 17px;
 }
 .loginBtn:hover{
     background-position: right;
-    font-size: 17px;
+    font-size: 18px;
 }
 .loginBtn2:hover{
     background-position: right;
-    font-size: 17px;
+    font-size: 18px;
 }
 .signup{
     color: white;
-    margin-top: 25px;
-    margin-bottom: 45px;
+    margin-top: 40px;
+    margin-bottom: 40px;
     text-align: center;
+    font-size: 16px;
 }
 .signup a{
     color: rgb(253, 231, 235);
     text-decoration: underline;
     text-align: center;
+    font-size: 17px;
 }
