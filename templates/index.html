@@ -6,17 +6,26 @@
         <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
-        {% if session.username %}
+        {% if session.user_id %}
         <form action="/logout">
             <title>Quiz-World</title>
             <h1>Quiz-World</h1>
-            <p>Olet kirjautunut nimellä {{ session.username }}.</p>
-            <p>Sovelluksessa on tällä hetkellä {{ nmr_of_quizzes }} kyselyä.</p>
-            {% for quiz in available_quizzes %}
-                <div class="signup">
-                    <a href="/quiz/{{ quiz[1] }}">{{ quiz[0]}}</a>
+            <p style="margin: 5px;">Olet kirjautunut nimellä {{ session.username }}.</p>
+            {% if nmr_of_quizzes == 1 %}
+                <p style="margin-bottom: 20px;">Sovelluksessa on tällä hetkellä {{ nmr_of_quizzes }} kysely.</p>
+            {% else %}
+                <p style="margin-bottom: 20px;">Sovelluksessa on tällä hetkellä {{ nmr_of_quizzes }} kyselyä.</p>
+            {% endif %}
+            <p class="quizzes">Kyselyt:</p>
+            {% for i in range(nmr_of_quizzes) %}
+                <div class="quizlink">
+                    <p class="quizlink">{{ i+1 }}. </p><a href="/quiz/{{ available_quizzes[i][1] }}">{{ available_quizzes[i][0]}}</a>
+                    <br>
                 </div>
             {% endfor %}
+            <div class="signup">
+                <a style="color:rgb(223, 252, 223);" href="/stats">Tilastot</a>
+            </div>
             {% if session.role == 2 %}
             <div class="signup">
                 <a href="/base">Luo uusi kysely</a>
