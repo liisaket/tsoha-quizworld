@@ -20,6 +20,8 @@ Nykyinen tilanne:
 - Käyttäjä voi vastata kyselyihin, ja sen jälkeen näkee kyselyn tulokset (pitää vielä muokata results.html sivua, että tietovisan tuloksissa
   näkyy mikä oli oikea vastaus).
 - Tilastot -sivu kaipaa vielä koodausta.
+- Myös virheihin on kiinnitetty huomiota, esim. jos kyselylle ei anna nimeä, hypätään Virhe-sivulle, jossa kerrotaan mikä meni pieleen.
+- Palaa takaisin- nappulasta pääsee aina takaisin edelliselle sivulle.
 - Olen tyytyväinen ulkonäköön ja sovellus toimii jo aika hyvin.
 
 https://tsoha-quizworld.herokuapp.com/
