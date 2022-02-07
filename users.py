@@ -15,13 +15,14 @@ def login(username,password):
         session["user_id"] = user[1]
         session["username"] = username
         session["role"] = user[2]
-        session["csrf_token"] = os.urandom(16).hex()                
+        session["csrf_token"] = os.urandom(16).hex()
         return True
 
 def logout():
     del session["user_id"]
     del session["username"]
     del session["role"]
+    del session["csrf_token"]
 
 def register(name, password, role):
     hash_value = generate_password_hash(password)
@@ -32,6 +33,26 @@ def register(name, password, role):
     except:
         return False
     return login(name,password)
+
+def check_username(username):
+    if len(username) < 1 or len(username) > 20:
+        return False
+    return True
+
+def check_password(password1):
+    if password1 == "":
+        return False
+    return True
+
+def check_passwords(password1, password2):
+    if password1 != password2:
+        return False
+    return True
+
+def check_role(role):
+    if role not in ("1", "2"):
+        return False
+    return True
 
 def user_id():
     return session.get("user_id")
