@@ -8,6 +8,18 @@
     <body>
         <form action="/create" method="POST">
             {% if session.user_id %}
+            <title>Quiz-World</title>
+            <h1>Quiz-World</h1>
+            <div class="signup">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/quizzes"></a>Kyselyt</li>
+                    <li><a href="/stats">Tilastot</a></li>
+                    {% if session.role == 2 %}
+                    <li><a href="/base">Luo uusi kysely</a></li>
+                    {% endif %}
+                </ul>
+            </div>
             {% if quiz_type==1 %}
             <h3 class="newquiz">Uusi tietovisa:</h3>
             <h3 class="topic">{{ topic }}</h3>
@@ -53,11 +65,11 @@
             {% endif %}
             {% if not session.user_id %}
             <h1>Quiz-World</h1>
-            <p>Et ole kirjautunut sisään.</p>
-            {% endif %}
+            <p>Et ole kirjautunut sisään.</p>  
             <div class="signup">
-                <a href="/base">Palaa takaisin</a>
+                <a href="/">Palaa takaisin</a>
             </div>
+            {% endif %}
         </form>
     </body>
 </html>

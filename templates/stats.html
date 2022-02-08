@@ -10,15 +10,49 @@
         <form action="/logout">
             <title>Quiz-World</title>
             <h1>Quiz-World</h1>
-            <h3 class="new" style="color: rgb(223, 252, 223)">Tilastot<br></h3>
-            <p>Rekisteröidyit Quiz-Wordliin {{ time.strftime("%d.%m.%Y") }} klo {{ time.strftime("%H:%M:%S") }}</p>
+            <div class="signup">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/quizzes">Kyselyt</a></li>
+                    <li>Tilastot</li>
+                    {% if session.role == 2 %}
+                    <li><a href="/base">Luo uusi kysely</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <h3 class="new" style="margin-bottom:30px;">Tilastot:<br></h3>
+            <ul.a>
+            <li>Olet kirjautunut nimellä {{ session.username }}.</li>
+            <li>Rekisteröidyit Quiz-Wordliin {{ time.strftime("%d.%m.%Y") }} klo {{ time.strftime("%H:%M:%S") }}</li>
+            </ul.a>
+            <br>
+            <p>Klikkaa kyselyä nähdäksesi sen tilastot.</p>
+            <p class="quizzes">Tietovisat:</p>
+            {% for quiz in available_quizzes %}
+                <div class="quizlink">
+                <ul.a>
+                    <li><a href="/result/{{ quiz[1] }}">{{ quiz[0]}}</a></li>
+                    <br>
+                </ul.a>
+                </div>
+            {% endfor %}
+            <p class="quizzes">Mielipidekyselyt:</p>
+            {% for poll in available_polls %}
+                <div class="quizlink">
+                <ul.a>
+                    <li><a href="/result/{{ poll[1] }}">{{ poll[0]}}</a></li>
+                    <br>
+                </ul.a>
+                </div>
+            {% endfor %}
+            <input type="submit" value="Kirjaudu ulos" class="loginBtn">
         {% else %}
         <h1>Quiz-World</h1>
         <p>Et ole kirjautunut sisään.</p>
-        {% endif %}
         <div class="signup">
             <a href="/">Palaa takaisin</a>
         </div>
+        {% endif %}
         </form>
     </body>
 </html>

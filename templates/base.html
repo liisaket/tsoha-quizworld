@@ -8,6 +8,18 @@
     <body>
         <form action="/new" method="POST">
             {% if session.user_id %}
+            <title>Quiz-World</title>
+            <h1>Quiz-World</h1>
+            <div class="signup">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/quizzes">Kyselyt</a></li>
+                    <li><a href="/stats">Tilastot</a></li>
+                    {% if session.role == 2 %}
+                    <li>Luo uusi kysely</li>
+                    {% endif %}
+                </ul>
+            </div>
             <h3 class="new">Luo uuden kyselyn pohja:<br></h3>
             <div class="textBoxdiv">
                 <input type="text" name="topic" placeholder="Kyselyn aihe" minlength="1" maxlength="20">
@@ -43,10 +55,10 @@
             {% if not session.user_id %}
             <h1>Quiz-World</h1>
             <p>Et ole kirjautunut sisään.</p>
-            {% endif %}
             <div class="signup">
                 <a href="/">Palaa takaisin</a>
             </div>
+            {% endif %}
         </form>
     </body>
 </html>

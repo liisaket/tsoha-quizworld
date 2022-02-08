@@ -10,28 +10,18 @@
         <form action="/logout">
             <title>Quiz-World</title>
             <h1>Quiz-World</h1>
-            <p style="margin: 5px;">Olet kirjautunut nimellä {{ session.username }}.</p>
-            {% if nmr_of_quizzes == 1 %}
-                <p style="margin-bottom: 20px;">Sovelluksessa on tällä hetkellä {{ nmr_of_quizzes }} kysely.</p>
-            {% else %}
-                <p style="margin-bottom: 20px;">Sovelluksessa on tällä hetkellä {{ nmr_of_quizzes }} kyselyä.</p>
-            {% endif %}
-            <p class="quizzes">Kyselyt:</p>
-            {% for i in range(nmr_of_quizzes) %}
-                <div class="quizlink">
-                    <p class="quizlink">{{ i+1 }}. </p><a href="/quiz/{{ available_quizzes[i][1] }}">{{ available_quizzes[i][0]}}</a>
-                    <br>
-                </div>
-            {% endfor %}
             <div class="signup">
-                <a style="color:rgb(223, 252, 223);" href="/stats">Tilastot</a>
+            <ul>
+                <li>Home</li>
+                <li><a href="/quizzes">Kyselyt</a></li>
+                <li><a href="/stats">Tilastot</a></li>
+                {% if session.role == 2 %}
+                <li><a href="/base">Luo uusi kysely</a></li>
+                {% endif %}
+            </ul>
             </div>
-            {% if session.role == 2 %}
-            <div class="signup">
-                <a href="/base">Luo uusi kysely</a>
-            </div>
-            {% endif %}
-            <input type="submit" value="Kirjaudu ulos" class="loginBtn">
+            <p>Olet kirjautunut nimellä {{ session.username }}.</p>
+            <input type="submit" style="margin-top:150px;" value="Kirjaudu ulos" class="loginBtn">
         </form>
         {% else %}
         <form action="/login" method="POST">
