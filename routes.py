@@ -64,10 +64,11 @@ def new():
     if not users.require_role(2):
         return render_template("error.html", message="Sinulla ei ole oikeuksia luoda kyselyitä", route="/")
     topic = request.form["topic"]
-    if topic in quizzes.get_topics():
+    if topic.capitalize() in quizzes.get_topics():
         return render_template("error.html", message=f"Kysely '{topic}' on jo olemassa, kokeile keksiä uusi aihe", route="/base")
     if topic == "" or len(topic) > 20:
         return render_template("error.html", message="Kyselyn aiheessa tulee olla 1-20 merkkiä", route="/base")
+    topic = topic.capitalize()
     quiz_type = int(request.form["quiz_type"])
     nmr_of_questions = int(request.form["nmr_of_questions"])
     nmr_of_choices = int(request.form["nmr_of_choices"])
@@ -141,4 +142,5 @@ def result(id):
 
 @app.route("/stats")
 def stats():
-    return render_template("stats.html")
+    time = users.registration_time()
+    return render_template("stats.html", time=time)
