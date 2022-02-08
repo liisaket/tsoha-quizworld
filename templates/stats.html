@@ -31,19 +31,19 @@
                 <div class="quizlink">
                 <ul.a>
                     <li><a href="/result/{{ quiz[1] }}">{{ quiz[0]}}</a></li>
-                    <br>
                 </ul.a>
                 </div>
             {% endfor %}
+            <br>
             <p class="quizzes">Mielipidekyselyt:</p>
             {% for poll in available_polls %}
                 <div class="quizlink">
                 <ul.a>
                     <li><a href="/result/{{ poll[1] }}">{{ poll[0]}}</a></li>
-                    <br>
                 </ul.a>
                 </div>
             {% endfor %}
+            <br><br>
             <input type="submit" value="Kirjaudu ulos" class="loginBtn">
         {% else %}
         <p>Et ole kirjautunut sisään.</p>

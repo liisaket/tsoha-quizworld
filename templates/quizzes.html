@@ -29,19 +29,19 @@
                 <div class="quizlink">
                 <ul.a>
                     <li><a href="/quiz/{{ quiz[1] }}">{{ quiz[0]}}</a></li>
-                    <br>
                 </ul.a>
                 </div>
             {% endfor %}
+            <br>
             <p class="quizzes">Mielipidekyselyt:</p>
             {% for poll in available_polls %}
                 <div class="quizlink">
                 <ul.a>
                     <li><a href="/quiz/{{ poll[1] }}">{{ poll[0]}}</a></li>
-                    <br>
                 </ul.a>
                 </div>
             {% endfor %}
+            <br><br>
             <input type="submit" value="Kirjaudu ulos" class="loginBtn">
         {% else %}
         <h1>Quiz-World</h1>
