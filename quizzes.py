@@ -1,9 +1,9 @@
 from db import db
 import users
 
-def get_quizzes():
-    sql = "SELECT topic, id, quiz_type FROM quizzes"
-    result = db.session.execute(sql)
+def get_quizzes(quiz_type):
+    sql = "SELECT topic, id FROM quizzes WHERE quiz_type=:quiz_type"
+    result = db.session.execute(sql, {"quiz_type":quiz_type})
     return result.fetchall()
 
 def get_topics():
