@@ -141,4 +141,5 @@ def result(id):
 
 @app.route("/stats")
 def stats():
-    return render_template("stats.html")
+    time = users.registration_time()
+    return render_template("stats.html", time=time)
