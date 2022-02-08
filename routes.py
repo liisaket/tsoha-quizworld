@@ -5,9 +5,18 @@ import quizzes
 
 @app.route("/")
 def index():
-    nmr_of_quizzes = quizzes.get_nmr_of_quizzes()
-    available_quizzes = quizzes.get_quizzes()
-    return render_template("index.html", nmr_of_quizzes=nmr_of_quizzes, available_quizzes=available_quizzes)
+    return render_template("index.html")
+
+@app.route("/quizzes")
+def available_quizzes():
+    all_quizzes = quizzes.get_nmr_of_quizzes()
+    available_quizzes = quizzes.get_quizzes(1)
+    available_polls = quizzes.get_quizzes(2)
+    nmr_quizzes = len(available_quizzes)
+    nmr_polls = len(available_polls)
+    return render_template("quizzes.html", all_quizzes=all_quizzes, \
+        available_quizzes=available_quizzes, available_polls=available_polls, nmr_quizzes=nmr_quizzes, \
+        nmr_polls=nmr_polls)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -143,4 +152,7 @@ def result(id):
 @app.route("/stats")
 def stats():
     time = users.registration_time()
-    return render_template("stats.html", time=time)
+    available_quizzes = quizzes.get_quizzes(1)
+    available_polls = quizzes.get_quizzes(2)
+    return render_template("stats.html", time=time, available_polls=available_polls, \
+        available_quizzes=available_quizzes)
