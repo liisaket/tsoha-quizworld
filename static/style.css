@@ -13,7 +13,7 @@ form {
     background: #bdbcbcce;
     width: 400px;
     height: auto;
-    padding: 75px 50px;
+    padding: 75px 45px;
     margin: auto;
 }
 p {
@@ -21,6 +21,28 @@ p {
     margin-bottom: 45px;
     color: white;
     font-size: 17px;
+}
+.stats {
+    text-align: left;
+    margin-bottom: 10px;
+    color: white;
+    font-size: 17px;
+}
+ul {
+    list-style-type:none;
+    display:inline-flex;
+    justify-content: center;
+}
+ul.a {
+    list-style-type: circle;
+    display:inline-flex;
+    justify-content: center;
+}
+li {
+    text-align: left;
+    color: white;
+    font-size: 17px;
+    margin: 5px;
 }
 .choice {
     text-align: left;
@@ -80,21 +102,16 @@ h1 {
     text-align: left;
     margin: 10px;
     margin-bottom: 5px;
-    color: rgb(227, 237, 252);
+    color: white;
     font-size: 25px;
     font-weight: 500;
-    border-bottom: 2px solid white;
-}
-.quizlink {
-    text-align: left;
-    color: rgb(227, 237, 252);
-    margin: 5px;
-    font-size: 18px;
-    display: inline;
+    text-decoration: underline;
 }
 .quizlink a{
     text-align: left;
-    color: rgb(227, 237, 252);
+    color: rgb(253, 231, 235);
+    margin: 5px;
+    font-size: 18px;
     display: inline;
     text-decoration: underline;
 }
