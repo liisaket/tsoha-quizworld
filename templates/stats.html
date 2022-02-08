@@ -6,10 +6,9 @@
         <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
-        {% if session.user_id %}
         <form action="/logout">
-            <title>Quiz-World</title>
             <h1>Quiz-World</h1>
+            {% if session.user_id %}
             <div class="signup">
                 <ul>
                     <li><a href="/">Home</a></li>
@@ -47,9 +46,8 @@
             {% endfor %}
             <input type="submit" value="Kirjaudu ulos" class="loginBtn">
         {% else %}
-        <h1>Quiz-World</h1>
         <p>Et ole kirjautunut sisään.</p>
-        <div class="signup">
+        <div class="signup" style="margin-bottom:240px;">
             <a href="/">Palaa takaisin</a>
         </div>
         {% endif %}

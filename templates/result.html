@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Quiz-World - Kyselyn tulokset</title>
+        <title>Quiz-World - Tulokset</title>
         <meta charset="utf-8">
         <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
         <form action="/result" method="POST">
+            <h1>Quiz-World</h1>
             {% if session.user_id %}
             <div class="signup">
                 <ul>
@@ -26,11 +27,11 @@
                     <p class="questions">{{ i+1 }}. {{ questions[i][1] }}</p>
                     {% for choice in choices %}
                         {% if choice[2] == questions[i][0] and choice[3] == True and choice[0] in user_answers %}
-                            <p class="choice">
+                            <p class="choice" style="font-weight: 500; color:rgb(223, 252, 223);">
                             <input type="radio" name="{{ questions[i][0] }}" checked> {{ choice[1] }}
                             </p><br>
                         {% elif choice[2] == questions[i][0] and choice[3] == True %}
-                            <p class="choice">
+                            <p class="choice" style="font-weight: 500; color:rgb(223, 252, 223);">
                             <input type="radio" name="{{ questions[i][0] }}" disabled> {{ choice[1] }}
                             </p><br>
                         {% elif choice[2] == questions[i][0] and choice[0] in user_answers %}
@@ -62,10 +63,12 @@
                     {% endfor %}
                 {% endfor %}
                 {% endif %}
-            {% else %}
-            <h1>Quiz-World</h1>
-            <p>Et ole kirjautunut sisään.</p>
             <div class="signup">
+                <a href="/stats">Palaa takaisin</a>
+            </div>
+            {% else %}
+            <p>Et ole kirjautunut sisään.</p>
+            <div class="signup" style="margin-bottom:240px;">
                 <a href="/">Palaa takaisin</a>
             </div>
             {% endif %}

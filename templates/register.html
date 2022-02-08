@@ -6,13 +6,14 @@
         <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
-        {% if session.username %}
-        <p>Olet jo kirjautunut sisään nimellä {{ session.username }}</p>
-        <div class="signup">
-            <a href="/">Takaisin etusivulle</a>
-        </div>
-        {% else %}
         <form action="/register" method="POST">
+            <h1>Quiz-World</h1>
+            {% if session.username %}
+                <p>Olet jo kirjautunut sisään nimellä {{ session.username }}</p>
+                <div class="signup" style="margin-bottom:240px;">
+                    <a href="/">Takaisin etusivulle</a>
+                </div>
+            {% else %}
             <h3>Rekisteröinti</h3>
             <div class="textBoxdiv">
                 <input type="text" name="username" placeholder="Käyttäjätunnus" minlength="1" maxlength="20">

@@ -7,9 +7,8 @@
     </head>
     <body>
         <form action="/new" method="POST">
-            {% if session.user_id %}
-            <title>Quiz-World</title>
             <h1>Quiz-World</h1>
+            {% if session.user_id %}
             <div class="signup">
                 <ul>
                     <li><a href="/">Home</a></li>
@@ -51,11 +50,9 @@
             </div>
             <button type="submit" class="loginBtn">Luo pohja</button>
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-            {% endif %}
-            {% if not session.user_id %}
-            <h1>Quiz-World</h1>
+            {% else %}
             <p>Et ole kirjautunut sisään.</p>
-            <div class="signup">
+            <div class="signup" style="margin-bottom:240px;">
                 <a href="/">Palaa takaisin</a>
             </div>
             {% endif %}
