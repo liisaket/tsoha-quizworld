@@ -57,6 +57,12 @@ def check_role(role):
 def user_id():
     return session.get("user_id")
 
+def registration_time():
+    user = user_id()
+    sql = "SELECT created_at FROM users WHERE users.id=:user"
+    result = db.session.execute(sql, {"user":user})
+    return result.fetchone()[0]
+
 def require_role(role):
     user_role = session["role"]
     if user_role != role:
