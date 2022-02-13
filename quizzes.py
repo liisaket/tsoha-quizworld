@@ -6,6 +6,29 @@ def get_quizzes(quiz_type):
     result = db.session.execute(sql, {"quiz_type":quiz_type})
     return result.fetchall()
 
+def get_undone_quizzes():
+    user = users.user_id()
+    sql = "SELECT q.topic, q.id FROM quizzes q WHERE q.id NOT IN \
+        (SELECT q.id FROM quizzes q \
+        JOIN questions que ON q.id=que.quiz_id \
+        JOIN choices c on que.id=c.question_id \
+        JOIN answers a ON c.id=a.choice_id \
+        JOIN users u ON a.user_id=u.id \
+        WHERE u.id=:user)"
+    result = db.session.execute(sql, {"user":user})
+    return result.fetchall()
+
+def get_done_quizzes():
+    user = users.user_id()
+    sql = "SELECT DISTINCT q.topic, q.id FROM choices c \
+        JOIN answers a ON c.id=a.choice_id \
+        JOIN users u ON a.user_id=u.id \
+        JOIN questions que ON c.question_id=que.id \
+        JOIN quizzes q ON que.quiz_id=q.id \
+        WHERE u.id=:user"
+    result = db.session.execute(sql, {"user":user})
+    return result.fetchall()
+
 def get_topics():
     sql = "SELECT topic FROM quizzes"
     result = db.session.execute(sql)
