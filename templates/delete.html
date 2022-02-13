@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Quiz-World - Kyselyt</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        <form action="/delete">
+            <h1>Quiz-World</h1>
+            {% if session.user_id %}
+            {% if session.role == 2 %}
+            <h3 class="error">Huomio:<br></h3>
+            <p>Oletko varma, että haluat poistaa kyselyn {{ topic }}?</p>
+            <p class="choice">
+                <input type="radio" name="confirmation" value="True"> Olen varma
+                </p><br>
+            <input type="hidden" name="topic" value="{{ topic }}">
+            <div class="signup" style="margin-bottom:240px;">
+                <a href="/">Palaa takaisin</a>
+            </div>
+        {% endif %}
+        {% endif %}
+        </form>
+    </body>
+</html>

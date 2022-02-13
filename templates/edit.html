@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Quiz-World - Kyselyt</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        <form action="/logout">
+            <h1>Quiz-World</h1>
+            {% if session.user_id %}
+            <div class="signup">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/quizzes">Kyselyt</a></li>
+                <li><a href="/stats">Tilastot</a></li>
+                {% if session.role == 2 %}
+                <li><a href="/base">Luo uusi kysely</a></li>
+                {% endif %}
+            </ul>
+            </div>
+            <h3 class="new" style="margin-bottom:30px;">Muokkaa kyselyitä</h3>
+            <p>Tällä sivulla voit muokata tai poistaa sovelluksen kyselyitä.</p>
+            <br>
+            <p class="quizzes">Tietovisat:</p>
+            {% for quiz in available_quizzes %}
+                <div class="quizlink">
+                <ul.a>
+                    <li><a href="/quiz/{{ quiz[1] }}">{{ quiz[0]}}</a>
+                        <input type="hidden" name="topic" value="{{ quiz[0] }}">
+                        <a href="/delete" style="color:rgb(223, 252, 223);">Poista</a>
+                        <a href="/edit" style="color:rgb(223, 252, 223);">Muokkaa</a></li>
+                </ul.a>
+                </div>
+            {% endfor %}
+            <br>
+            <p class="quizzes">Mielipidekyselyt:</p>
+            {% for poll in available_polls %}
+                <div class="quizlink">
+                <ul.a>
+                    <li><a href="/quiz/{{ poll[1] }}">{{ poll[0]}}</a>
+                        <input type="hidden" name="topic" value="{{ poll[0] }}">
+                        <a href="/delete" style="color:rgb(223, 252, 223);">Poista</a>
+                        <a href="/edit" style="color:rgb(223, 252, 223);">Muokkaa</a></li>
+                </ul.a>
+                </div>
+            {% endfor %}
+            <br><br>
+            <input type="submit" value="Kirjaudu ulos" class="loginBtn">
+        {% endif %}
+        </form>
+    </body>
+</html>
