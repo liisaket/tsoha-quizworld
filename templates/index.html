@@ -19,8 +19,20 @@
                 {% endif %}
             </ul>
             </div>
+            <h3 class="new" style="margin-bottom:30px; color:rgb(253, 221, 253);">Tervetuloa Quiz-Worldiin.</h3>
+            <p style="text-align:left;">Quiz-Worldissä voit vastata tietovisoihin tai mielipidekyselyihin,
+                tai ylläpitäjänä jopa luoda (sekä pian muokata tai poistaa!) näitä kyselyitä.
+                Kyselyihin voi vastata vain kerran, jottei oikeita vastauksia voi luntata tuloksista.</p>
+            <br>
+            <p style="text-align:left;">Tilastoissa voit nähdä tekemäsi kyselyiden tulokset. Mielipidekyselyiden tilastoja voit tutkia,
+                ilman että olisit itse tehnyt kyseisen kyselyn.</p>
+            <br>
+            <p>Have fun!</p>
+            <br>
+            <br>
             <p>Olet kirjautunut nimellä {{ session.username }}.</p>
-            <input type="submit" style="margin-top:150px;" value="Kirjaudu ulos" class="loginBtn">
+            <br>
+            <input type="submit" value="Kirjaudu ulos" class="loginBtn">
         </form>
         {% else %}
         <form action="/login" method="POST">
