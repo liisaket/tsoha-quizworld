@@ -25,7 +25,12 @@
             {% else %}
                 <p>Sovelluksessa on tällä hetkellä {{ all_quizzes }} kyselyä.</p>
             {% endif %}
-            <p style="margin-bottom: 30px;">Olet vastannut {{ done_quizzes }}/{{ all_quizzes }} kyselyistä.</p>
+            <p style="margin-bottom:0px;">Olet vastannut {{ done_quizzes }}/{{ all_quizzes }} kyselyistä.</p>
+            {% if session.role == 2 %}
+            <div class="signup" style="margin-top:10px; margin-bottom:30px;">
+                <a href="/edit">Muokkaa kyselyitä</a>
+            </div>
+            {% endif %}
             <p class="quizzes">Tietovisat:</p>
             {% for quiz in available_quizzes %}
                 <div class="quizlink">
@@ -45,11 +50,6 @@
             {% endfor %}
             <br><br>
             <input type="submit" value="Kirjaudu ulos" class="loginBtn">
-        {% else %}
-        <p>Et ole kirjautunut sisään.</p>
-        <div class="signup" style="margin-bottom:240px;">
-            <a href="/">Palaa takaisin</a>
-        </div>
         {% endif %}
         </form>
     </body>

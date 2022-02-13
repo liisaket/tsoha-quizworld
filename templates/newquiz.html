@@ -61,11 +61,6 @@
             <input type="hidden" name="choices" value="{{ choices }}">
             <input type="hidden" name="nmr_of_questions" value="{{ questions }}">
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-            {% else %}
-            <p>Et ole kirjautunut sisään.</p>  
-            <div class="signup" style="margin-bottom:240px;">
-                <a href="/">Palaa takaisin</a>
-            </div>
             {% endif %}
         </form>
     </body>

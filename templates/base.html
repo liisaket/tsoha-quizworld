@@ -61,11 +61,6 @@
             </div>
             <button type="submit" class="loginBtn">Luo pohja</button>
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-            {% else %}
-            <p>Et ole kirjautunut sisään.</p>
-            <div class="signup" style="margin-bottom:240px;">
-                <a href="/">Palaa takaisin</a>
-            </div>
             {% endif %}
         </form>
     </body>

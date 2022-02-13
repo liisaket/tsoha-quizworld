@@ -41,15 +41,10 @@
         <input type="hidden" name="quiz_id" value="{{ quiz_id }}">
         <input type="hidden" name="quiz_type" value="{{ quiz_type }}">
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-        {% else %}
-        <p>Et ole kirjautunut sisään.</p>
-        <div class="signup" style="margin-bottom:240px;">
-            <a href="/">Palaa takaisin</a>
-        </div>
-        {% endif %}
         <div class="signup" style="margin-bottom:20px;">
             <a href="/quizzes">Palaa takaisin</a>
         </div>
+        {% endif %}
         </form>
     </body>
 </html>
