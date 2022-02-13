@@ -9,15 +9,17 @@ def index():
 
 @app.route("/quizzes")
 def available_quizzes():
-    all_quizzes = quizzes.get_nmr_of_quizzes()
-    available_quizzes = quizzes.get_quizzes(1)
-    available_polls = quizzes.get_quizzes(2)
-    nmr_quizzes = len(available_quizzes)
-    nmr_polls = len(available_polls)
-    done_quizzes = len(quizzes.get_done_quizzes())
-    return render_template("quizzes.html", all_quizzes=all_quizzes, \
-        available_quizzes=available_quizzes, available_polls=available_polls, nmr_quizzes=nmr_quizzes, \
-        nmr_polls=nmr_polls, done_quizzes=done_quizzes)
+    if users.user_id():
+        all_quizzes = quizzes.get_nmr_of_quizzes()
+        available_quizzes = quizzes.get_quizzes(1)
+        available_polls = quizzes.get_quizzes(2)
+        nmr_quizzes = len(available_quizzes)
+        nmr_polls = len(available_polls)
+        done_quizzes = len(quizzes.get_done_quizzes())
+        return render_template("quizzes.html", all_quizzes=all_quizzes, \
+            available_quizzes=available_quizzes, available_polls=available_polls, nmr_quizzes=nmr_quizzes, \
+            nmr_polls=nmr_polls, done_quizzes=done_quizzes)
+    return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -34,8 +36,10 @@ def login():
 
 @app.route("/logout")
 def logout():
-    users.logout()
-    return redirect("/")
+    if users.user_id():
+        users.logout()
+        return redirect("/")
+    return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -71,88 +75,98 @@ def base():
 
 @app.route("/new", methods=["POST"])
 def new():
-    if not users.require_role(2):
-        return render_template("error.html", message="Sinulla ei ole oikeuksia luoda kyselyitä", route="/")
-    topic = request.form["topic"]
-    if topic.capitalize() in quizzes.get_topics():
-        return render_template("error.html", message=f"Kysely '{topic}' on jo olemassa, kokeile keksiä uusi aihe", route="/base")
-    if topic == "" or len(topic) > 20:
-        return render_template("error.html", message="Kyselyn aiheessa tulee olla 1-20 merkkiä", route="/base")
-    topic = topic.capitalize()
-    quiz_type = int(request.form["quiz_type"])
-    nmr_of_questions = int(request.form["nmr_of_questions"])
-    nmr_of_choices = int(request.form["nmr_of_choices"])
-    return render_template("newquiz.html", topic=topic, quiz_type=quiz_type, questions=nmr_of_questions, choices=nmr_of_choices)
+    if users.user_id():
+        if not users.require_role(2):
+            return render_template("error.html", message="Sinulla ei ole oikeuksia luoda kyselyitä", route="/")
+        topic = request.form["topic"]
+        if topic.capitalize() in quizzes.get_topics():
+            return render_template("error.html", message=f"Kysely '{topic}' on jo olemassa, kokeile keksiä uusi aihe", route="/base")
+        if topic == "" or len(topic) > 20:
+            return render_template("error.html", message="Kyselyn aiheessa tulee olla 1-20 merkkiä", route="/base")
+        topic = topic.capitalize()
+        quiz_type = int(request.form["quiz_type"])
+        nmr_of_questions = int(request.form["nmr_of_questions"])
+        nmr_of_choices = int(request.form["nmr_of_choices"])
+        return render_template("newquiz.html", topic=topic, quiz_type=quiz_type, questions=nmr_of_questions, choices=nmr_of_choices)
+    return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
 
 @app.route("/create", methods=["POST"])
 def create():
-    users.check_csrf()
-    topic = request.form["topic"]
-    quiz_type = int(request.form["quiz_type"])
-    questions = request.form.getlist("question")
-    choices = request.form.getlist("choice")
-    nmr_of_choices = int(request.form["choices"])
-    nmr_of_questions = int(request.form["nmr_of_questions"])
-    correct = request.form.getlist("correct")
-    for question in questions:
-        if question == "" or len(question) > 100:
-            return render_template("error.html", message="Kysymyksessä tulee olla 1-100 merkkiä", route="/base")
-    for choice in choices:
-        if choice == "" or len(choice) > 50:
-            return render_template("error.html", message="Vaihtoehdossa tulee olla 1-50 merkkiä", route="/base")
-    if quiz_type == 1 and nmr_of_questions != len([x for x in correct if x=="True"]):
-        return render_template("error.html", message="Oikeita vastauksia tulee olla 1 per kysymys", route="/base")
-    quiz_id = quizzes.create_quiz(topic, quiz_type)
-    i = 0
-    for question in questions:
-        question_id = quizzes.create_question(quiz_id, question)
-        for choice in range(int(nmr_of_choices)):
-            quizzes.create_choice(question_id, choices[i], correct[i])
-            i += 1
-    return redirect("/")
+    if users.user_id():
+        if not users.require_role(2):
+            return render_template("error.html", message="Sinulla ei ole oikeuksia luoda kyselyitä", route="/")
+        topic = request.form["topic"]
+        quiz_type = int(request.form["quiz_type"])
+        questions = request.form.getlist("question")
+        choices = request.form.getlist("choice")
+        nmr_of_choices = int(request.form["choices"])
+        nmr_of_questions = int(request.form["nmr_of_questions"])
+        correct = request.form.getlist("correct")
+        for question in questions:
+            if question == "" or len(question) > 100:
+                return render_template("error.html", message="Kysymyksessä tulee olla 1-100 merkkiä", route="/base")
+        for choice in choices:
+            if choice == "" or len(choice) > 50:
+                return render_template("error.html", message="Vaihtoehdossa tulee olla 1-50 merkkiä", route="/base")
+        if quiz_type == 1 and nmr_of_questions != len([x for x in correct if x=="True"]):
+            return render_template("error.html", message="Oikeita vastauksia tulee olla 1 per kysymys", route="/base")
+        quiz_id = quizzes.create_quiz(topic, quiz_type)
+        i = 0
+        for question in questions:
+            question_id = quizzes.create_question(quiz_id, question)
+            for choice in range(int(nmr_of_choices)):
+                quizzes.create_choice(question_id, choices[i], correct[i])
+                i += 1
+        return redirect("/")
+    return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
 
 @app.route("/quiz/<int:id>")
 def quiz(id):
-    topic = quizzes.get_quiz_topic(id)
-    if id in [x[1] for x in quizzes.get_done_quizzes()]:
-        return render_template("error.html", message=f"Olet jo vastannut kyselyyn {topic}", route="/quizzes")
-    quiz_type = quizzes.get_quiz_type(id)
-    questions = quizzes.get_questions(id)
-    nmr_of_questions = len(questions)
-    choices = quizzes.get_choices(questions)
-    return render_template("quiz.html", quiz_id=id, quiz_type=quiz_type, topic=topic, questions=questions, choices=choices, \
-        nmr_of_questions=nmr_of_questions)
+    if users.user_id():
+        topic = quizzes.get_quiz_topic(id)
+        if id in [x[1] for x in quizzes.get_done_quizzes()]:
+            return render_template("error.html", message=f"Olet jo vastannut kyselyyn {topic}", route="/quizzes")
+        quiz_type = quizzes.get_quiz_type(id)
+        questions = quizzes.get_questions(id)
+        nmr_of_questions = len(questions)
+        choices = quizzes.get_choices(questions)
+        return render_template("quiz.html", quiz_id=id, quiz_type=quiz_type, topic=topic, questions=questions, choices=choices, \
+            nmr_of_questions=nmr_of_questions)
+    return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
 
 @app.route("/answer", methods=["POST"])
 def answer():
-    users.check_csrf()
-    quiz_id = request.form["quiz_id"]
-    question_ids = request.form.getlist("question")
-    choice_ids = [request.form[question] for question in question_ids if question in request.form]
-    if not choice_ids:
-        return render_template("error.html", message="Et täyttänyt kyselyä", route="/quiz/"+str(quiz_id))
-    quizzes.store_user_answers(choice_ids)
-    return redirect("/result/" + str(quiz_id))
+    if users.user_id():
+        quiz_id = request.form["quiz_id"]
+        question_ids = request.form.getlist("question")
+        choice_ids = [request.form[question] for question in question_ids if question in request.form]
+        if not choice_ids:
+            return render_template("error.html", message="Et täyttänyt kyselyä", route="/quiz/"+str(quiz_id))
+        quizzes.store_user_answers(choice_ids)
+        return redirect("/result/" + str(quiz_id))
+    return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
 
 @app.route("/result/<int:id>")
 def result(id):
-    topic = quizzes.get_quiz_topic(id)
-    quiz_type = quizzes.get_quiz_type(id)
-    if id in [x[1] for x in quizzes.get_undone_quizzes()] and quiz_type == 1:
-        return render_template("error.html", message=f"Et ole vielä vastannut kyselyyn {topic}", route="/stats")
-    questions = quizzes.get_questions(id)
-    nmr_of_questions = len(questions)
-    user_answers = quizzes.get_user_answers(id)
-    if quiz_type == 1:
-        choices = quizzes.get_choices(questions)
-        right_answers = quizzes.user_right_answers(id)
-        return render_template("result.html", topic=topic, quiz_type=quiz_type, questions=questions, \
-            nmr_of_questions=nmr_of_questions, choices=choices, user_answers=user_answers, \
-            right_answers=right_answers)
-    if quiz_type == 2:
-        choices = quizzes.get_poll_choices(id)
-        return render_template("result.html", topic=topic, quiz_type=quiz_type, questions=questions, \
-            nmr_of_questions=nmr_of_questions, choices=choices, user_answers=user_answers, quiz_id=id)
+    if users.user_id():
+        topic = quizzes.get_quiz_topic(id)
+        quiz_type = quizzes.get_quiz_type(id)
+        if id in [x[1] for x in quizzes.get_undone_quizzes()] and quiz_type == 1:
+            return render_template("error.html", message=f"Et ole vielä vastannut kyselyyn {topic}", route="/stats")
+        questions = quizzes.get_questions(id)
+        nmr_of_questions = len(questions)
+        user_answers = quizzes.get_user_answers(id)
+        if quiz_type == 1:
+            choices = quizzes.get_choices(questions)
+            right_answers = quizzes.user_right_answers(id)
+            return render_template("result.html", topic=topic, quiz_type=quiz_type, questions=questions, \
+                nmr_of_questions=nmr_of_questions, choices=choices, user_answers=user_answers, \
+                right_answers=right_answers)
+        if quiz_type == 2:
+            choices = quizzes.get_poll_choices(id)
+            return render_template("result.html", topic=topic, quiz_type=quiz_type, questions=questions, \
+                nmr_of_questions=nmr_of_questions, choices=choices, user_answers=user_answers, quiz_id=id)
+    return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
 
 @app.route("/stats")
 def stats():
@@ -164,4 +178,27 @@ def stats():
         available_polls = quizzes.get_quizzes(2)
         return render_template("stats.html", time=time, available_polls=available_polls, \
             available_quizzes=available_quizzes, all_quizzes=all_quizzes, done_quizzes=done_quizzes)
-    return render_template("stats.html")
+    return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
+
+@app.route("/edit")
+def edit():
+    if users.user_id():
+        if users.require_role(2):
+            all_quizzes = quizzes.get_nmr_of_quizzes()
+            available_quizzes = quizzes.get_quizzes(1)
+            available_polls = quizzes.get_quizzes(2)
+            nmr_quizzes = len(available_quizzes)
+            nmr_polls = len(available_polls)
+            return render_template("edit.html", all_quizzes=all_quizzes, \
+                available_quizzes=available_quizzes, available_polls=available_polls, nmr_quizzes=nmr_quizzes, \
+                nmr_polls=nmr_polls)
+        return render_template("error.html", message="Sinulla ei ole oikeuksia muokata kyselyitä", route="/")
+    return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
+
+@app.route("/delete")
+def delete():
+    if users.user_id():
+        if users.require_role(2):
+            return render_template("delete.html")
+        return render_template("error.html", message="Sinulla ei ole oikeuksia muokata kyselyitä", route="/")
+    return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
