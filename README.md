@@ -16,11 +16,16 @@ Nykyinen tilanne:
 - Ylläpitäjä voi luoda uuden kyselyn: joko tietovisan, jossa on oikeita tai vääriä vastauksia, tai mielipidekyselyn,
   jossa ei ole vääriä vastauksia. Ensin kyselylle luodaan pohja (kyselyn tyyppi, aihe, montako kysymystä ja vastausvaihtoehtoa) ja
   sitten luodaan itse kysely (sen kysymykset ja vastausvaihtoehdot).
-- Sovelluksen etusivulla (kun on kirjautuneena sisään) näkyy kuinka monta kyselyä on olemassa, ja linkit niihin.
-- Käyttäjä voi vastata kyselyihin, ja sen jälkeen näkee kyselyn tulokset (pitää vielä muokata results.html sivua, että tietovisan tuloksissa
-  näkyy mikä oli oikea vastaus).
-- Tilastot -sivu kaipaa vielä koodausta.
-- Myös virheihin on kiinnitetty huomiota, esim. jos kyselylle ei anna nimeä, hypätään Virhe-sivulle, jossa kerrotaan mikä meni pieleen.
+- Kun on kirjautunut sisään, etusivulla näkyy "valikko": Home, Kyselyt, Tilastot, (ja jos on ylläpitäjä niin Luo uusi kysely).
+  Linkeistä painamalla pääsee sivuille:
+- Home-linkistä pääsee etusivulle.
+- Kyselyt-linkistä pääsee kyselyt-sivulle näkyy sovelluksen kaikki tietovisat ja mielipidekyselyt, joita painamalla
+  pääsee suorittamaan kyselyitä.
+- Tilastot-linkistä pääsee tilastoihin, jossa näkyy käyttäjän nimi ja aika, jolloin käyttäjä rekisteröityi sovellukseen. Siellä näkyy myös kyselyt, joita painamalla
+  pääsee tutkimaan kyselyiden tuloksia.
+- Käyttäjä voi vastata kyselyihin, ja sen jälkeen näkee kyselyn tulokset. Tietovisan tuloksissa oikea vastaus näkyy vihreänä ja lihavoituna,
+  ja käyttäjän oma valinta näkyy valitussa "pallerossa". Mielipidekyselyissä näkyy kuinka monta kappaletta vastauksia on missäkin vaihtoehdossa.
+- Myös virheihin on kiinnitetty huomiota, esim. jos kyselylle ei anna nimeä, hypätään Virhe-sivulle, jossa kerrotaan mikä meni pieleen, yms.
 - Palaa takaisin- nappulasta pääsee aina takaisin edelliselle sivulle.
 - Olen tyytyväinen ulkonäköön ja sovellus toimii jo aika hyvin.
 
