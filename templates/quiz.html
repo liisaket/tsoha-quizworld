@@ -12,7 +12,7 @@
             <div class="signup">
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="/quizzes"></a>Kyselyt</li>
+                    <li><a href="/quizzes">Kyselyt</a></li>
                     <li><a href="/stats">Tilastot</a></li>
                     {% if session.role == 2 %}
                     <li><a href="/base">Luo uusi kysely</a></li>
@@ -25,6 +25,7 @@
             <h3 class="newquiz">Vastaa mielipidekyselyyn:</h3>
             {% endif %}
             <h3 class="topic">{{ topic }}</h3>
+            <p style="margin:20px;">Muista, voit vastata kyselyihin vain kerran.</p>
             {% for i in range(nmr_of_questions) %}
                 <input type="hidden" name="question" value="{{ questions[i][0] }}">
                 <p class="questions">{{ i+1 }}. {{ questions[i][1] }}</p>
@@ -42,9 +43,12 @@
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         {% else %}
         <p>Et ole kirjautunut sisään.</p>
-        {% endif %}
         <div class="signup" style="margin-bottom:240px;">
             <a href="/">Palaa takaisin</a>
+        </div>
+        {% endif %}
+        <div class="signup" style="margin-bottom:20px;">
+            <a href="/quizzes">Palaa takaisin</a>
         </div>
         </form>
     </body>

@@ -20,12 +20,12 @@
                 </ul>
             </div>
             <h3 class="new" style="margin-bottom:30px;">Tilastot:<br></h3>
-            <ul.a>
-            <li>Olet kirjautunut nimellä {{ session.username }}.</li>
-            <li>Rekisteröidyit Quiz-Wordliin {{ time.strftime("%d.%m.%Y") }} klo {{ time.strftime("%H:%M:%S") }}</li>
-            </ul.a>
+            <p>Olet kirjautunut nimellä {{ session.username }}.</p>
+            <p>Rekisteröidyit Quiz-Wordliin {{ time.strftime("%d.%m.%Y") }} klo {{ time.strftime("%H:%M:%S") }}</p>
+            <p>Olet vastannut {{ done_quizzes }}/{{ all_quizzes }} kyselyistä.</p>
             <br>
             <p>Klikkaa kyselyä nähdäksesi sen tilastot.</p>
+            <br>
             <p class="quizzes">Tietovisat:</p>
             {% for quiz in available_quizzes %}
                 <div class="quizlink">

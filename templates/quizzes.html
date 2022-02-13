@@ -19,11 +19,13 @@
                 {% endif %}
             </ul>
             </div>
+            <h3 class="new" style="margin-bottom:30px;">Kyselyt:<br></h3>
             {% if all_quizzes == 1 %}
-                <p style="margin-bottom: 20px;">Sovelluksessa on tällä hetkellä {{ all_quizzes }} kysely.</p>
+                <p>Sovelluksessa on tällä hetkellä {{ all_quizzes }} kysely.</p>
             {% else %}
-                <p style="margin-bottom: 20px;">Sovelluksessa on tällä hetkellä {{ all_quizzes }} kyselyä.</p>
+                <p>Sovelluksessa on tällä hetkellä {{ all_quizzes }} kyselyä.</p>
             {% endif %}
+            <p style="margin-bottom: 30px;">Olet vastannut {{ done_quizzes }}/{{ all_quizzes }} kyselyistä.</p>
             <p class="quizzes">Tietovisat:</p>
             {% for quiz in available_quizzes %}
                 <div class="quizlink">
@@ -44,7 +46,6 @@
             <br><br>
             <input type="submit" value="Kirjaudu ulos" class="loginBtn">
         {% else %}
-        <h1>Quiz-World</h1>
         <p>Et ole kirjautunut sisään.</p>
         <div class="signup" style="margin-bottom:240px;">
             <a href="/">Palaa takaisin</a>
