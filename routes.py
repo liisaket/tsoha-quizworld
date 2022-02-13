@@ -14,9 +14,10 @@ def available_quizzes():
     available_polls = quizzes.get_quizzes(2)
     nmr_quizzes = len(available_quizzes)
     nmr_polls = len(available_polls)
+    done_quizzes = len(quizzes.get_done_quizzes())
     return render_template("quizzes.html", all_quizzes=all_quizzes, \
         available_quizzes=available_quizzes, available_polls=available_polls, nmr_quizzes=nmr_quizzes, \
-        nmr_polls=nmr_polls)
+        nmr_polls=nmr_polls, done_quizzes=done_quizzes)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -63,13 +64,13 @@ def register():
     
 @app.route("/base")
 def base():
-    if not users.require_role(2):
-        return render_template("error.html", message="Sinulla ei ole oikeuksia luoda kyselyitä", route="/")
+    if users.user_id():
+        if not users.require_role(2):
+            return render_template("error.html", message="Sinulla ei ole oikeuksia luoda kyselyitä", route="/")
     return render_template("base.html")
 
 @app.route("/new", methods=["POST"])
 def new():
-    users.check_csrf()
     if not users.require_role(2):
         return render_template("error.html", message="Sinulla ei ole oikeuksia luoda kyselyitä", route="/")
     topic = request.form["topic"]
@@ -113,6 +114,8 @@ def create():
 @app.route("/quiz/<int:id>")
 def quiz(id):
     topic = quizzes.get_quiz_topic(id)
+    if id in [x[1] for x in quizzes.get_done_quizzes()]:
+        return render_template("error.html", message=f"Olet jo vastannut kyselyyn {topic}", route="/quizzes")
     quiz_type = quizzes.get_quiz_type(id)
     questions = quizzes.get_questions(id)
     nmr_of_questions = len(questions)
@@ -135,6 +138,8 @@ def answer():
 def result(id):
     topic = quizzes.get_quiz_topic(id)
     quiz_type = quizzes.get_quiz_type(id)
+    if id in [x[1] for x in quizzes.get_undone_quizzes()] and quiz_type == 1:
+        return render_template("error.html", message=f"Et ole vielä vastannut kyselyyn {topic}", route="/stats")
     questions = quizzes.get_questions(id)
     nmr_of_questions = len(questions)
     user_answers = quizzes.get_user_answers(id)
@@ -147,12 +152,16 @@ def result(id):
     if quiz_type == 2:
         choices = quizzes.get_poll_choices(id)
         return render_template("result.html", topic=topic, quiz_type=quiz_type, questions=questions, \
-            nmr_of_questions=nmr_of_questions, choices=choices, user_answers=user_answers)
+            nmr_of_questions=nmr_of_questions, choices=choices, user_answers=user_answers, quiz_id=id)
 
 @app.route("/stats")
 def stats():
-    time = users.registration_time()
-    available_quizzes = quizzes.get_quizzes(1)
-    available_polls = quizzes.get_quizzes(2)
-    return render_template("stats.html", time=time, available_polls=available_polls, \
-        available_quizzes=available_quizzes)
+    if users.user_id():
+        time = users.registration_time()
+        all_quizzes = quizzes.get_nmr_of_quizzes()
+        done_quizzes = len(quizzes.get_done_quizzes())
+        available_quizzes = quizzes.get_quizzes(1)
+        available_polls = quizzes.get_quizzes(2)
+        return render_template("stats.html", time=time, available_polls=available_polls, \
+            available_quizzes=available_quizzes, all_quizzes=all_quizzes, done_quizzes=done_quizzes)
+    return render_template("stats.html")
