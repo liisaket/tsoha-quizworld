@@ -199,6 +199,12 @@ def edit():
 def delete():
     if users.user_id():
         if users.require_role(2):
+            if request.method == "GET":
+                all_quizzes = quizzes.get_all_quizzes()
+                return render_template("delete.html", list=all_quizzes)
+            if request.method == "POST":
+                if "quiz" in request.form:
+                    pass
             return render_template("delete.html")
         return render_template("error.html", message="Sinulla ei ole oikeuksia muokata kyselyitä", route="/")
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
