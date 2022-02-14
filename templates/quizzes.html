@@ -27,8 +27,11 @@
             {% endif %}
             <p style="margin-bottom:0px;">Olet vastannut {{ done_quizzes }}/{{ all_quizzes }} kyselyistä.</p>
             {% if session.role == 2 %}
-            <div class="signup" style="margin-top:10px; margin-bottom:30px;">
-                <a href="/edit">Muokkaa kyselyitä</a>
+            <div class="signup" style="margin-bottom:15px; margin-top:5px;">
+            <ul>
+                <li><a href="/edit">Muokkaa kyselyitä </a></li>
+                <li><a href="/delete"> Poista kyselyitä</a></li>
+            </ul>
             </div>
             {% endif %}
             <p class="quizzes">Tietovisat:</p>

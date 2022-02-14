@@ -6,18 +6,30 @@
         <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
-        <form action="/delete">
+        <form action="/delete" method="post">
             <h1>Quiz-World</h1>
             {% if session.user_id %}
+            <div class="signup">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/quizzes">Kyselyt</a></li>
+                    <li><a href="/stats">Tilastot</a></li>
+                    {% if session.role == 2 %}
+                    <li><a href="/base">Luo uusi kysely</a></li>
+                    {% endif %}
+                </ul>
+            </div>
             {% if session.role == 2 %}
-            <h3 class="error">Huomio:<br></h3>
-            <p>Oletko varma, että haluat poistaa kyselyn {{ topic }}?</p>
-            <p class="choice">
-                <input type="radio" name="confirmation" value="True"> Olen varma
+            <h3 class="new">Kyselyn poistaminen</h3><br>
+            <p>Minkä kyselyn haluat poistaa?</p><br>
+            {% for quiz in list %}
+                <p class="choice">
+                    <input type="radio" name="quiz" value="{{ quiz.id }}">{{ quiz.topic }}
                 </p><br>
-            <input type="hidden" name="topic" value="{{ topic }}">
-            <div class="signup" style="margin-bottom:240px;">
-                <a href="/">Palaa takaisin</a>
+            {% endfor %}
+            <input type="submit" value="Poista kysely" class="loginBtn" style="margin-top:30px;">
+            <div class="signup" style="margin-bottom:30px;">
+                <a href="/quizzes">Palaa takaisin</a>
             </div>
         {% endif %}
         {% endif %}
