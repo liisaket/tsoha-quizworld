@@ -14,9 +14,7 @@
                 <li><a href="/">Home</a></li>
                 <li>Kyselyt</li>
                 <li><a href="/stats">Tilastot</a></li>
-                {% if session.role == 2 %}
-                <li><a href="/base">Luo uusi kysely</a></li>
-                {% endif %}
+                <li><a href="/account">Asetukset</a></li>
             </ul>
             </div>
             <h3 class="new" style="margin-bottom:30px;">Kyselyt:<br></h3>
@@ -31,6 +29,7 @@
             <ul>
                 <li><a href="/edit">Muokkaa kyselyitä </a></li>
                 <li><a href="/delete"> Poista kyselyitä</a></li>
+                <li><a href="/base">Luo uusi kysely</a></li>
             </ul>
             </div>
             {% endif %}
