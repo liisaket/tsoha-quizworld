@@ -1,3 +1,4 @@
+from crypt import methods
 from app import app
 from flask import render_template, request, redirect, session, abort
 import users
@@ -151,7 +152,8 @@ def result(id):
     if users.user_id():
         topic = quizzes.get_quiz_topic(id)
         quiz_type = quizzes.get_quiz_type(id)
-        if id in [x[1] for x in quizzes.get_undone_quizzes()] and quiz_type == 1:
+        undone_quizzes = [x[1] for x in quizzes.get_undone_quizzes()]
+        if id in undone_quizzes and quiz_type == 1:
             return render_template("error.html", message=f"Et ole vielä vastannut kyselyyn {topic}", route="/stats")
         questions = quizzes.get_questions(id)
         nmr_of_questions = len(questions)
@@ -162,10 +164,14 @@ def result(id):
             return render_template("result.html", topic=topic, quiz_type=quiz_type, questions=questions, \
                 nmr_of_questions=nmr_of_questions, choices=choices, user_answers=user_answers, \
                 right_answers=right_answers)
+        message = False
         if quiz_type == 2:
             choices = quizzes.get_poll_choices(id)
+            if id in undone_quizzes:
+                message = True
             return render_template("result.html", topic=topic, quiz_type=quiz_type, questions=questions, \
-                nmr_of_questions=nmr_of_questions, choices=choices, user_answers=user_answers, quiz_id=id)
+                nmr_of_questions=nmr_of_questions, choices=choices, user_answers=user_answers, quiz_id=id, \
+                message=message)
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
 
 @app.route("/stats")
@@ -195,7 +201,7 @@ def edit():
         return render_template("error.html", message="Sinulla ei ole oikeuksia muokata kyselyitä", route="/")
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
 
-@app.route("/delete")
+@app.route("/delete", methods=["GET", "POST"])
 def delete():
     if users.user_id():
         if users.require_role(2):
@@ -204,7 +210,8 @@ def delete():
                 return render_template("delete.html", list=all_quizzes)
             if request.method == "POST":
                 if "quiz" in request.form:
-                    pass
-            return render_template("delete.html")
+                    quiz = request.form["quiz"]
+                    quizzes.delete_quiz(quiz)
+                return redirect("/")
         return render_template("error.html", message="Sinulla ei ole oikeuksia muokata kyselyitä", route="/")
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
