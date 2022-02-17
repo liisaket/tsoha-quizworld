@@ -104,8 +104,8 @@ def create():
         nmr_of_questions = int(request.form["nmr_of_questions"])
         correct = request.form.getlist("correct")
         for question in questions:
-            if question == "" or len(question) > 100:
-                return render_template("error.html", message="Kysymyksessä tulee olla 1-100 merkkiä", route="/base")
+            if question == "" or len(question) > 50:
+                return render_template("error.html", message="Kysymyksessä tulee olla 1-50 merkkiä", route="/base")
         for choice in choices:
             if choice == "" or len(choice) > 50:
                 return render_template("error.html", message="Vaihtoehdossa tulee olla 1-50 merkkiä", route="/base")
@@ -186,18 +186,37 @@ def stats():
             available_quizzes=available_quizzes, all_quizzes=all_quizzes, done_quizzes=done_quizzes)
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
 
-@app.route("/edit")
-def edit():
+@app.route("/pick", methods=["GET", "POST"])
+def pick():
     if users.user_id():
         if users.require_role(2):
-            all_quizzes = quizzes.get_nmr_of_quizzes()
-            available_quizzes = quizzes.get_quizzes(1)
-            available_polls = quizzes.get_quizzes(2)
-            nmr_quizzes = len(available_quizzes)
-            nmr_polls = len(available_polls)
-            return render_template("edit.html", all_quizzes=all_quizzes, \
-                available_quizzes=available_quizzes, available_polls=available_polls, nmr_quizzes=nmr_quizzes, \
-                nmr_polls=nmr_polls)
+            if request.method == "GET":
+                all_quizzes = quizzes.get_all_quizzes()
+                return render_template("pick.html", list=all_quizzes)
+            if request.method == "POST":
+                if "quiz" in request.form:
+                    id = request.form["quiz"]
+                return redirect("/edit/" + str(id))
+        return render_template("error.html", message="Sinulla ei ole oikeuksia muokata kyselyitä", route="/")
+    return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
+
+@app.route("/edit/<int:id>", methods=["POST", "GET"])
+def edit(id):
+    if users.user_id():
+        if users.require_role(2):
+            if request.method == "GET":
+                topic = quizzes.get_quiz_topic(id)
+                quiz_type = quizzes.get_quiz_type(id)
+                questions = quizzes.get_questions(id)
+                nmr_of_questions = len(questions)
+                choices = quizzes.get_choices(questions)
+                nmr_of_choices = len(choices)
+                return render_template("edit.html", quiz_id=id, quiz_type=quiz_type, topic=topic, questions=questions, \
+                choices=choices, nmr_of_questions=nmr_of_questions, nmr_of_choices=nmr_of_choices)
+            if request.method == "POST":
+                topic = request.form["topic"]
+                quiz_id = quizzes.edit_topic(id, topic)
+                return redirect("/")
         return render_template("error.html", message="Sinulla ei ole oikeuksia muokata kyselyitä", route="/")
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
 
@@ -213,5 +232,5 @@ def delete():
                     quiz = request.form["quiz"]
                     quizzes.delete_quiz(quiz)
                 return redirect("/")
-        return render_template("error.html", message="Sinulla ei ole oikeuksia muokata kyselyitä", route="/")
+        return render_template("error.html", message="Sinulla ei ole oikeuksia poistaa kyselyitä", route="/")
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")

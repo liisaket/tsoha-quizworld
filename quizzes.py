@@ -103,6 +103,21 @@ def get_poll_choices(id):
     result = db.session.execute(sql, {"id":id})
     return result.fetchall()
 
+def edit_topic(quiz_id, new_topic):
+    sql = "UPDATE quizzes SET topic=:new_topic WHERE id=:quiz_id RETURNING id"
+    result = db.session.execute(sql, {"id":quiz_id, "topic":new_topic})
+    return result.fetchone()[0]
+
+def edit_question(id, new_content):
+    sql = "UPDATE questions SET content=:new_content WHERE quiz_id=:id RETURNING id"
+    result = db.session.execute(sql, {"id":id, "content":new_content})
+    return result.fetchone()[0]
+
+def edit_choice(id, new_content, new_correct):
+    sql = "UPDATE choices SET content=:new_content, correct=new_correct WHERE question_id=:id"
+    result = db.session.execute(sql, {"id":id, "content":new_content, "correct":new_correct})
+    return result.fetchall()
+
 def create_quiz(topic, quiz_type):
     sql = "INSERT INTO quizzes (topic, quiz_type) VALUES (:topic, :quiz_type) RETURNING id"
     result = db.session.execute(sql, {"topic":topic,"quiz_type":quiz_type})
