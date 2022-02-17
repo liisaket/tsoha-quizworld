@@ -25,11 +25,13 @@
             {% endif %}
             <p style="margin-bottom:0px;">Olet vastannut {{ done_quizzes }}/{{ all_quizzes }} kyselyistä.</p>
             {% if session.role == 2 %}
+            <p style="margin-top:10px;">Olet ylläpitäjä, joten sinulla on oikeus luoda uusia kyselyitä, muokata olemassa olevia kyselyitä (pian)
+                tai poistaa niitä.</p>
             <div class="signup" style="margin-bottom:15px; margin-top:5px;">
             <ul>
-                <li><a href="/edit">Muokkaa kyselyitä </a></li>
-                <li><a href="/delete"> Poista kyselyitä</a></li>
-                <li><a href="/base">Luo uusi kysely</a></li>
+                <li><a href="/base">Luo uusi</a></li>
+                <li><a href="/pick">Muokkaa</a></li>
+                <li><a href="/delete">Poista</a></li>
             </ul>
             </div>
             {% endif %}

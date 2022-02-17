@@ -6,46 +6,78 @@
         <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
-        <form action="/logout">
+        <form action="/edit" method="POST">
             <h1>Quiz-World</h1>
             {% if session.user_id %}
             <div class="signup">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/quizzes">Kyselyt</a></li>
-                <li><a href="/stats">Tilastot</a></li>
-                <li><a href="/account">Asetukset</a></li>
-            </ul>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/quizzes">Kyselyt</a></li>
+                    <li><a href="/stats">Tilastot</a></li>
+                    <li><a href="/account">Asetukset</a></li>
+                </ul>
             </div>
-            <h3 class="new" style="margin-bottom:30px;">Muokkaa kyselyitä</h3>
-            <p>Tällä sivulla voit muokata tai poistaa sovelluksen kyselyitä.</p>
-            <br>
-            <p class="quizzes">Tietovisat:</p>
-            {% for quiz in available_quizzes %}
-                <div class="quizlink">
-                <ul.a>
-                    <li><a href="/quiz/{{ quiz[1] }}">{{ quiz[0]}}</a>
-                        <input type="hidden" name="topic" value="{{ quiz[0] }}">
-                        <a href="/delete" style="color:rgb(223, 252, 223);">Poista</a>
-                        <a href="/edit" style="color:rgb(223, 252, 223);">Muokkaa</a></li>
-                </ul.a>
+            {% if session.role == 2 %}
+            {% if quiz_type==1 %}
+            <h3 class="newquiz">Muokkaa tietovisaa:</h3>
+            <h3 class="topic">{{ topic }}</h3>
+            <div class="textBoxdiv">
+                <input type="text" name="topic" placeholder="Kyselyn aihe" value="{{ topic }}" minlength="1" maxlength="20">
+            </div>
+            {% for i in range(1,nmr_of_questions+1) %}
+                <div class="textBoxdiv" style="white-space: initial;">
+                    <input type="text" style="color:lavenderblush" name="question" value="{{ questions[i-1][1] }}" placeholder="{{ i }}. Kysymys">
                 </div>
+                {% for j in range(1, nmr_of_choices+1) %}
+                    {% if choices[j-1][2] == questions[i-1][0] %}
+                    <div class="textBoxdiv">
+                        <input type="text" name="choice" value="{{ choices[j-1][1] }}" placeholder="{{ j }}. Vaihtoehto">
+                    </div>
+                    <div class="textBoxdiv">
+                        <select name="correct">
+                            {% if choices[j-1][3] == True %}
+                            <option value=True selected>Tosi</option>
+                            <option value=False>Epätosi</option>
+                            {% endif %}
+                            {% if choices[j-1][3] == False %}
+                            <option value=True>Tosi</option>
+                            <option value=False selected>Epätosi</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                    {% endif %}
+                {% endfor %}
             {% endfor %}
-            <br>
-            <p class="quizzes">Mielipidekyselyt:</p>
-            {% for poll in available_polls %}
-                <div class="quizlink">
-                <ul.a>
-                    <li><a href="/quiz/{{ poll[1] }}">{{ poll[0]}}</a>
-                        <input type="hidden" name="topic" value="{{ poll[0] }}">
-                        <a href="/delete" style="color:rgb(223, 252, 223);">Poista</a>
-                        <a href="/edit" style="color:rgb(223, 252, 223);">Muokkaa</a></li>
-                </ul.a>
+            {% endif %}
+            {% if quiz_type==2 %}
+            <h3 class="newquiz">Muokkaa mielipidekyselyä:</h3>
+            <h3 class="topic">{{ topic }}</h3>
+            <div class="textBoxdiv">
+                <input type="text" name="topic" placeholder="Kyselyn aihe" value="{{ topic }}" minlength="1" maxlength="20">
+            </div>
+            {% for question in questions %}
+                <div class="textBoxdiv">
+                    <input type="text" style="color:lavenderblush" name="question" value="{{ question[1] }}" placeholder="{{ question[1] }}">
                 </div>
+                {% for choice in choices %}
+                    <div class="textBoxdiv">
+                        <input type="text" name="choice" value="{{ choice[1] }}" placeholder="{{ choice[1] }}">
+                        <input type="hidden" name="correct" value="True">
+                    </div>
+                {% endfor %}
             {% endfor %}
-            <br><br>
-            <input type="submit" value="Kirjaudu ulos" class="loginBtn">
-        {% endif %}
+            {% endif %}
+            <input type="submit" value="Muokkaa kyselyä" class="loginBtn" style="margin-top:30px;">
+            {% endif %}
+            {% endif %}
+            <input type="hidden" name="topic" value="{{ topic }}">
+            <input type="hidden" name="quiz_id" value="{{ quiz_id }}">
+            <input type="hidden" name="quiz_type" value="{{ quiz_type }}">
+            <input type="hidden" name="choices" value="{{ choices }}">
+            <input type="hidden" name="questions" value="{{ questions }}">
+            <input type="hidden" name="nmr_of_choices" value="{{ nmr_of_choices }}">
+            <input type="hidden" name="nmr_of_questions" value="{{ nmr_of_questions }}">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         </form>
     </body>
 </html>
