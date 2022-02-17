@@ -10,7 +10,6 @@ CREATE TABLE quizzes (
     id SERIAL PRIMARY KEY,
     topic TEXT,
     quiz_type INTEGER,
-    creator_id INTEGER REFERENCES users;
 );
 
 CREATE TABLE questions (
