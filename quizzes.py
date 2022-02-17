@@ -140,6 +140,9 @@ def delete_quiz(id):
     question_ids = [question[0] for question in questions]
     choices = get_choices(questions)
     choice_ids = [choice[0] for choice in choices]
+    sql = "DELETE FROM answers WHERE choice_id IN :choices"
+    db.session.execute(sql, {"choices":tuple(choice_ids)})
+    db.session.commit()
     sql = "DELETE FROM choices WHERE question_id IN :questions"
     db.session.execute(sql, {"questions":tuple(question_ids)})
     db.session.commit()
@@ -149,11 +152,4 @@ def delete_quiz(id):
     sql = "DELETE FROM quizzes WHERE id=:id"
     db.session.execute(sql, {"id":id})
     db.session.commit()
-    done_quizzes = get_done_quizzes()
-    if id in done_quizzes:
-        sql = "DELETE FROM answers WHERE choice_id IN :choices"
-        db.session.execute(sql, {"choices":tuple(choice_ids)})
-        db.session.commit()
-    
-
 
