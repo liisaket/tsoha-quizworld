@@ -20,16 +20,16 @@
                 {% if quiz_type==1 %}
                 <h3 class="newquiz">Tietovisan tulokset:</h3>
                 <h3 class="topic">{{ topic }}</h3>
-                <p class="result">Sait {{ right_answers }} / {{ nmr_of_questions }} oikein</p>
+                <p class="result">Sait {{ right_answers }} / {{ nmr_of_questions }} oikein!</p>
                 {% for i in range(nmr_of_questions) %}
                     <p class="questions">{{ i+1 }}. {{ questions[i][1] }}</p>
                     {% for choice in choices %}
                         {% if choice[2] == questions[i][0] and choice[3] == True and choice[0] in user_answers %}
-                            <p class="choice" style="font-weight: 500; color:rgb(223, 252, 223);">
+                            <p class="choice" style="font-weight: 500; color:rgb(203, 253, 203);">
                             <input type="radio" name="{{ questions[i][0] }}" checked> {{ choice[1] }}
                             </p><br>
                         {% elif choice[2] == questions[i][0] and choice[3] == True %}
-                            <p class="choice" style="font-weight: 500; color:rgb(223, 252, 223);">
+                            <p class="choice" style="font-weight: 500; color:rgb(203, 253, 203);">
                             <input type="radio" name="{{ questions[i][0] }}" disabled> {{ choice[1] }}
                             </p><br>
                         {% elif choice[2] == questions[i][0] and choice[0] in user_answers %}
@@ -47,7 +47,7 @@
                 <h3 class="newquiz">Mielipidekyselyn tulokset:</h3>
                 <h3 class="topic">{{ topic }}</h3>
                 <br>
-                {% if message==True %}
+                {% if message %}
                 <p>Tietojen mukaan et ole vielä vastannut tähän kyselyyn.</p>
                 <p>Voit vastata siihen täällä:</p>
                 <div class="quizlink" style="text-align:center;">
