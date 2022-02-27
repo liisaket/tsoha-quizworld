@@ -53,7 +53,7 @@ li {
 .result {
     text-align: center;
     margin: 20px;
-    color: rgb(232, 253, 232);
+    color: rgb(203, 253, 203);
     font-size: 20px;
     font-weight: 600;
 }
@@ -77,6 +77,12 @@ h1 {
     color: rgb(223, 252, 223);
     font-size: 30px;
     border-bottom: 2px solid white;
+}
+.errormessage {
+    margin-top: 20px;
+    color: rgb(227, 238, 255);
+    font-size: 20px;
+    font-weight: 500;
 }
 .new {
     text-align: center;
