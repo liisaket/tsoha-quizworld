@@ -36,6 +36,9 @@
         <form action="/login" method="POST">
             <h1>Quiz-World</h1>
             <h3>Kirjaudu sisään</h3>
+            {% if message %}
+                <p class="errormessage">Virhe: {{ message }}</p>
+            {% endif %}
             <div class="textBoxdiv">
                 <input type="text" name="username" placeholder="Käyttäjätunnus">
             </div>

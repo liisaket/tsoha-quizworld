@@ -15,6 +15,9 @@
                 </div>
             {% else %}
             <h3>Rekisteröinti</h3>
+            {% if message %}
+                <p class="errormessage">Virhe: {{ message }}</p>
+            {% endif %}
             <div class="textBoxdiv">
                 <input type="text" name="username" placeholder="Käyttäjätunnus" minlength="1" maxlength="20">
             </div>
