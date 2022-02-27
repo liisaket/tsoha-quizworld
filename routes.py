@@ -32,7 +32,7 @@ def login():
         password = request.form["password"]
 
         if not users.login(username, password):
-            return render_template("error.html", message="Väärä käyttäjätunnus tai salasana", route="/")
+            return render_template("index.html", message="Väärä käyttäjätunnus tai salasana, yritä uudelleen!")
         return redirect("/")
 
 @app.route("/logout")
@@ -50,21 +50,21 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         if not users.check_username(username):
-            return render_template("error.html", message="Käyttäjätunnuksessa tulee olla 1-20 merkkiä", route="/register")
+            return render_template("register.html", message="Käyttäjätunnuksessa tulee olla 1-20 merkkiä")
 
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         if not users.check_passwords(password1, password2):
-            return render_template("error.html", message="Salasanat eroavat", route="/register")
+            return render_template("register.html", message="Salasanat eroavat")
         if not users.check_password(password1):
-            return render_template("error.html", message="Salasana on tyhjä", route="/register")
+            return render_template("register.html", message="Salasana on tyhjä")
 
         role = request.form["role"]
         if not users.check_role(role):
-            return render_template("error.html", message="Tuntematon käyttäjärooli", route="/register")
+            return render_template("register.html", message="Tuntematon käyttäjärooli")
 
         if not users.register(username, password1, role):
-            return render_template("error.html", message="Rekisteröinti ei onnistunut", route="/register")
+            return render_template("register.html", message="Rekisteröinti ei onnistunut")
         return redirect("/")
     
 @app.route("/base")
@@ -141,8 +141,19 @@ def answer():
         quiz_id = request.form["quiz_id"]
         question_ids = request.form.getlist("question")
         choice_ids = [request.form[question] for question in question_ids if question in request.form]
+        message = ""
         if not choice_ids:
-            return render_template("error.html", message="Et täyttänyt kyselyä", route="/quiz/"+str(quiz_id))
+            message = "Et täyttänyt kyselyä!"
+        if len(choice_ids) != len(question_ids):
+            message = "Et täyttänyt kyselyä loppuun asti!"
+        if message != "":
+            topic = quizzes.get_quiz_topic(quiz_id)
+            quiz_type = quizzes.get_quiz_type(quiz_id)
+            questions = quizzes.get_questions(quiz_id)
+            nmr_of_questions = len(questions)
+            choices = quizzes.get_choices(questions)
+            return render_template("quiz.html", quiz_id=quiz_id, quiz_type=quiz_type, topic=topic, questions=questions, choices=choices, \
+                nmr_of_questions=nmr_of_questions, message=message)
         quizzes.store_user_answers(choice_ids)
         return redirect("/result/" + str(quiz_id))
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
