@@ -208,6 +208,7 @@ def pick():
                 all_quizzes = quizzes.get_all_quizzes()
                 return render_template("pick.html", list=all_quizzes)
             if request.method == "POST":
+                users.check_csrf()
                 if "quiz" in request.form:
                     id = request.form["quiz"]
                 return redirect("/edit/" + str(id))
