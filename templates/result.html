@@ -20,6 +20,14 @@
                 {% if quiz_type==1 %}
                 <h3 class="newquiz">Tietovisan tulokset:</h3>
                 <h3 class="topic">{{ topic }}</h3>
+                {% if message %}
+                    <br>
+                    <p>Tietojen mukaan et ole vielä vastannut tähän kyselyyn.</p>
+                    <p>Voit vastata siihen täällä:</p>
+                    <div class="quizlink" style="text-align:center;">
+                        <a href="/quiz/{{ quiz_id }}">{{ topic }}</a>
+                    </div>
+                {% else %}
                 <p class="result">Sait {{ right_answers }} / {{ nmr_of_questions }} oikein!</p>
                 {% for i in range(nmr_of_questions) %}
                     <p class="questions">{{ i+1 }}. {{ questions[i][1] }}</p>
@@ -43,16 +51,18 @@
                         {% endif %}
                     {% endfor %}
                 {% endfor %}
-                {% else %}
+                {% endif %}
+                {% endif %}
+                {% if quiz_type==2 %}
                 <h3 class="newquiz">Mielipidekyselyn tulokset:</h3>
                 <h3 class="topic">{{ topic }}</h3>
                 <br>
                 {% if message %}
-                <p>Tietojen mukaan et ole vielä vastannut tähän kyselyyn.</p>
-                <p>Voit vastata siihen täällä:</p>
-                <div class="quizlink" style="text-align:center;">
-                    <a href="/quiz/{{ quiz_id }}">{{ topic }}</a>
-                </div>
+                    <p>Tietojen mukaan et ole vielä vastannut tähän kyselyyn.</p>
+                    <p>Voit vastata siihen täällä:</p>
+                    <div class="quizlink" style="text-align:center;">
+                        <a href="/quiz/{{ quiz_id }}">{{ topic }}</a>
+                    </div>
                 {% endif %}
                 {% for i in range(nmr_of_questions) %}
                     <p class="questions">{{ i+1 }}. {{ questions[i][1] }}</p>

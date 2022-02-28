@@ -58,6 +58,7 @@
                 </select>
             </div>
             <button type="submit" class="loginBtn">Luo pohja</button>
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             {% endif %}
         </form>
     </body>

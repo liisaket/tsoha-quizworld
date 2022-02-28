@@ -76,6 +76,7 @@ def base():
 @app.route("/new", methods=["POST"])
 def new():
     if users.user_id():
+        users.check_csrf()
         if not users.require_role(2):
             return render_template("error.html", message="Sinulla ei ole oikeuksia luoda kyselyitä", route="/")
         topic = request.form["topic"]
@@ -93,6 +94,7 @@ def new():
 @app.route("/create", methods=["POST"])
 def create():
     if users.user_id():
+        users.check_csrf()
         if not users.require_role(2):
             return render_template("error.html", message="Sinulla ei ole oikeuksia luoda kyselyitä", route="/")
         topic = request.form["topic"]
@@ -137,6 +139,7 @@ def quiz(id):
 @app.route("/answer", methods=["POST"])
 def answer():
     if users.user_id():
+        users.check_csrf()
         quiz_id = request.form["quiz_id"]
         question_ids = request.form.getlist("question")
         choice_ids = [request.form[question] for question in question_ids if question in request.form]
@@ -160,11 +163,13 @@ def answer():
 @app.route("/result/<int:id>")
 def result(id):
     if users.user_id():
+        message = False
         topic = quizzes.get_quiz_topic(id)
         quiz_type = quizzes.get_quiz_type(id)
         undone_quizzes = [x[1] for x in quizzes.get_undone_quizzes()]
         if id in undone_quizzes and quiz_type == 1:
-            return render_template("error.html", message=f"Et ole vielä vastannut kyselyyn {topic}", route="/stats")
+            message = True
+            return render_template("result.html", quiz_type=quiz_type, topic=topic, quiz_id=id, message=message)
         questions = quizzes.get_questions(id)
         nmr_of_questions = len(questions)
         user_answers = quizzes.get_user_answers(id)
@@ -174,7 +179,6 @@ def result(id):
             return render_template("result.html", topic=topic, quiz_type=quiz_type, questions=questions, \
                 nmr_of_questions=nmr_of_questions, choices=choices, user_answers=user_answers, \
                 right_answers=right_answers)
-        message = False
         if quiz_type == 2:
             choices = quizzes.get_poll_choices(id)
             if id in undone_quizzes:
@@ -224,6 +228,7 @@ def edit(id):
                 return render_template("edit.html", quiz_id=id, quiz_type=quiz_type, topic=topic, questions=questions, \
                 choices=choices, nmr_of_questions=nmr_of_questions, nmr_of_choices=nmr_of_choices)
             if request.method == "POST":
+                users.check_csrf()
                 topic = request.form["topic"]
                 quiz_id = quizzes.edit_topic(id, topic)
                 return redirect("/")
@@ -238,6 +243,7 @@ def delete():
                 all_quizzes = quizzes.get_all_quizzes()
                 return render_template("delete.html", list=all_quizzes)
             if request.method == "POST":
+                users.check_csrf()
                 if "quiz" in request.form:
                     quiz = request.form["quiz"]
                     quizzes.delete_quiz(quiz)
