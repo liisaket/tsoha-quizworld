@@ -105,18 +105,20 @@ def get_poll_choices(id):
 
 def edit_topic(quiz_id, new_topic):
     sql = "UPDATE quizzes SET topic=:new_topic WHERE id=:quiz_id RETURNING id"
-    result = db.session.execute(sql, {"id":quiz_id, "topic":new_topic})
+    result = db.session.execute(sql, {"quiz_id":quiz_id, "new_topic":new_topic})
+    db.session.commit()
     return result.fetchone()[0]
 
 def edit_question(id, new_content):
     sql = "UPDATE questions SET content=:new_content WHERE quiz_id=:id RETURNING id"
-    result = db.session.execute(sql, {"id":id, "content":new_content})
+    result = db.session.execute(sql, {"id":id, "new_content":new_content})
+    db.session.commit()
     return result.fetchone()[0]
 
-def edit_choice(id, new_content, new_correct):
-    sql = "UPDATE choices SET content=:new_content, correct=new_correct WHERE question_id=:id"
-    result = db.session.execute(sql, {"id":id, "content":new_content, "correct":new_correct})
-    return result.fetchall()
+def edit_choice(choice_id, question_id, new_content, new_correct):
+    sql = "UPDATE choices SET content=:new_content, correct=:new_correct WHERE question_id=:question_id AND id=:choice_id"
+    result = db.session.execute(sql, {"choice_id":choice_id, "question_id":question_id, "new_content":new_content, "new_correct":new_correct})
+    db.session.commit()
 
 def create_quiz(topic, quiz_type):
     sql = "INSERT INTO quizzes (topic, quiz_type) VALUES (:topic, :quiz_type) RETURNING id"

@@ -227,10 +227,26 @@ def edit(id):
                 return render_template("edit.html", quiz_id=id, quiz_type=quiz_type, topic=topic, questions=questions, \
                 choices=choices, nmr_of_questions=nmr_of_questions, nmr_of_choices=nmr_of_choices)
             if request.method == "POST":
-                users.check_csrf()
-                topic = request.form["topic"]
-                quiz_id = quizzes.edit_topic(id, topic)
-                return redirect("/")
+                newtopic = request.form["newtopic"]
+                quiz_type = request.form["quiz_type"]
+                newquestions = request.form.getlist("newquestion")
+                newchoices = request.form.getlist("newchoice")
+                nmr_of_choices = int(request.form["nmr_of_choices"])
+                nmr_of_questions = int(request.form["nmr_of_questions"])
+                newcorrect = request.form.getlist("newcorrect")
+                old_questions = quizzes.get_questions(id)
+                choice_ids = [x[0] for x in quizzes.get_choices(old_questions)]
+                if quiz_type == 1 and nmr_of_questions != len([x for x in newcorrect if x=="True"]):
+                    return render_template("newquiz.html", quiz_type=quiz_type, questions=nmr_of_questions, \
+                        choices=nmr_of_choices, message="Oikeita vastauksia tulee olla 1 per kysymys")
+                quiz_id = quizzes.edit_topic(id, newtopic)
+                i = 0
+                for question in newquestions:
+                    question_id = quizzes.edit_question(id, question)
+                    for choice in range(int(nmr_of_choices)):
+                        quizzes.edit_choice(choice_ids[i], question_id, newchoices[i], newcorrect[i])
+                        i += 1
+                return redirect("/quizzes")
         return render_template("error.html", message="Sinulla ei ole oikeuksia muokata kyselyitä", route="/")
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
 
