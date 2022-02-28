@@ -104,12 +104,6 @@ def create():
         nmr_of_choices = int(request.form["choices"])
         nmr_of_questions = int(request.form["nmr_of_questions"])
         correct = request.form.getlist("correct")
-        for question in questions:
-            if question == "" or len(question) > 50:
-                return render_template("newquiz.html", message="Kysymyksessä tulee olla 1-50 merkkiä")
-        for choice in choices:
-            if choice == "" or len(choice) > 50:
-                return render_template("newquiz.html", message="Vaihtoehdossa tulee olla 1-50 merkkiä")
         if quiz_type == 1 and nmr_of_questions != len([x for x in correct if x=="True"]):
             return render_template("newquiz.html", quiz_type=quiz_type, questions=nmr_of_questions, \
                 choices=nmr_of_choices, message="Oikeita vastauksia tulee olla 1 per kysymys")
@@ -227,6 +221,7 @@ def edit(id):
                 return render_template("edit.html", quiz_id=id, quiz_type=quiz_type, topic=topic, questions=questions, \
                 choices=choices, nmr_of_questions=nmr_of_questions, nmr_of_choices=nmr_of_choices)
             if request.method == "POST":
+                users.check_csrf()
                 newtopic = request.form["newtopic"]
                 quiz_type = request.form["quiz_type"]
                 newquestions = request.form.getlist("newquestion")
