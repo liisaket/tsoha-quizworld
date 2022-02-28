@@ -81,9 +81,9 @@ def new():
             return render_template("error.html", message="Sinulla ei ole oikeuksia luoda kyselyitä", route="/")
         topic = request.form["topic"]
         if topic.capitalize() in quizzes.get_topics():
-            return render_template("error.html", message=f"Kysely '{topic}' on jo olemassa, kokeile keksiä uusi aihe", route="/base")
+            return render_template("base.html", message=f"Kysely '{topic}' on jo olemassa, koita keksiä uusi aihe!")
         if topic == "" or len(topic) > 20:
-            return render_template("error.html", message="Kyselyn aiheessa tulee olla 1-20 merkkiä", route="/base")
+            return render_template("base.html", message="Kyselyn aiheessa tulee olla 1-20 merkkiä")
         topic = topic.capitalize()
         quiz_type = int(request.form["quiz_type"])
         nmr_of_questions = int(request.form["nmr_of_questions"])
@@ -106,12 +106,13 @@ def create():
         correct = request.form.getlist("correct")
         for question in questions:
             if question == "" or len(question) > 50:
-                return render_template("error.html", message="Kysymyksessä tulee olla 1-50 merkkiä", route="/base")
+                return render_template("newquiz.html", message="Kysymyksessä tulee olla 1-50 merkkiä")
         for choice in choices:
             if choice == "" or len(choice) > 50:
-                return render_template("error.html", message="Vaihtoehdossa tulee olla 1-50 merkkiä", route="/base")
+                return render_template("newquiz.html", message="Vaihtoehdossa tulee olla 1-50 merkkiä")
         if quiz_type == 1 and nmr_of_questions != len([x for x in correct if x=="True"]):
-            return render_template("error.html", message="Oikeita vastauksia tulee olla 1 per kysymys", route="/base")
+            return render_template("newquiz.html", quiz_type=quiz_type, questions=nmr_of_questions, \
+                choices=nmr_of_choices, message="Oikeita vastauksia tulee olla 1 per kysymys")
         quiz_id = quizzes.create_quiz(topic, quiz_type)
         i = 0
         for question in questions:
@@ -163,13 +164,11 @@ def answer():
 @app.route("/result/<int:id>")
 def result(id):
     if users.user_id():
-        message = False
         topic = quizzes.get_quiz_topic(id)
         quiz_type = quizzes.get_quiz_type(id)
         undone_quizzes = [x[1] for x in quizzes.get_undone_quizzes()]
         if id in undone_quizzes and quiz_type == 1:
-            message = True
-            return render_template("result.html", quiz_type=quiz_type, topic=topic, quiz_id=id, message=message)
+            return render_template("result.html", quiz_type=quiz_type, topic=topic, quiz_id=id, message=True)
         questions = quizzes.get_questions(id)
         nmr_of_questions = len(questions)
         user_answers = quizzes.get_user_answers(id)
@@ -182,10 +181,9 @@ def result(id):
         if quiz_type == 2:
             choices = quizzes.get_poll_choices(id)
             if id in undone_quizzes:
-                message = True
-            return render_template("result.html", topic=topic, quiz_type=quiz_type, questions=questions, \
-                nmr_of_questions=nmr_of_questions, choices=choices, user_answers=user_answers, quiz_id=id, \
-                message=message)
+                return render_template("result.html", topic=topic, quiz_type=quiz_type, questions=questions, \
+                    nmr_of_questions=nmr_of_questions, choices=choices, user_answers=user_answers, quiz_id=id, \
+                    message=True)
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
 
 @app.route("/stats")

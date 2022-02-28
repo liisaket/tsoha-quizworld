@@ -12,7 +12,7 @@
             <div class="signup">
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="/quizzes"></a>Kyselyt</li>
+                    <li><a href="/quizzes">Kyselyt</a></li>
                     <li><a href="/stats">Tilastot</a></li>
                     <li><a href="/account">Asetukset</a></li>
                 </ul>
@@ -20,13 +20,16 @@
             {% if quiz_type==1 %}
             <h3 class="newquiz">Uusi tietovisa:</h3>
             <h3 class="topic">{{ topic }}</h3>
+            {% if message %}
+                <p class="errormessage">{{ message }}</p>
+            {% endif %}
             {% for i in range(1, questions+1) %}
                 <div class="textBoxdiv">
-                    <input type="text" style="color:lavenderblush" name="question" placeholder="{{ i }}. Kysymys">
+                    <input type="text" style="color:lavenderblush" name="question" placeholder="{{ i }}. Kysymys" minlength="1" maxlength="50">
                 </div>
                 {% for j in range(1, choices+1) %}
                     <div class="textBoxdiv">
-                        <input type="text" name="choice" placeholder="{{ j }}. Vaihtoehto">
+                        <input type="text" name="choice" placeholder="{{ j }}. Vaihtoehto" minlength="1" maxlength="50">
                     </div>
                     <div class="textBoxdiv">
                         <select name="correct">
@@ -40,13 +43,16 @@
             {% if quiz_type==2 %}
             <h3 class="newquiz">Uusi mielipidekysely:</h3>
             <h3 class="topic">{{ topic }}</h3>
+            {% if message %}
+                <p class="errormessage">{{ message }}</p>
+            {% endif %}
             {% for i in range(1, questions+1) %}
                 <div class="textBoxdiv">
-                    <input type="text" style="color:lavenderblush" name="question" placeholder="{{ i }}. Kysymys">
+                    <input type="text" style="color:lavenderblush" name="question" placeholder="{{ i }}. Kysymys" minlength="1" maxlength="50">
                 </div>
                 {% for j in range(1, choices+1) %}
                     <div class="textBoxdiv">
-                        <input type="text" name="choice" placeholder="{{ j }}. Vaihtoehto">
+                        <input type="text" name="choice" placeholder="{{ j }}. Vaihtoehto" minlength="1" maxlength="50">
                         <input type="hidden" name="correct" value="True">
                     </div>
                 {% endfor %}

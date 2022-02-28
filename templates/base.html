@@ -18,6 +18,9 @@
                 </ul>
             </div>
             <h3 class="new">Luo uuden kyselyn pohja:<br></h3>
+            {% if message %}
+                <p class="errormessage">{{ message }}</p>
+            {% endif %}
             <div class="textBoxdiv">
                 <input type="text" name="topic" placeholder="Kyselyn aihe" minlength="1" maxlength="20">
             </div>
