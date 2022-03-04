@@ -247,18 +247,18 @@ def edit(id):
         return render_template("error.html", message="Sinulla ei ole oikeuksia muokata kyselyitä", route="/")
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
 
-@app.route("/delete", methods=["GET", "POST"])
-def delete():
+@app.route("/remove", methods=["GET", "POST"])
+def remove():
     if users.user_id():
         if users.require_role(2):
             if request.method == "GET":
                 all_quizzes = quizzes.get_all_quizzes()
-                return render_template("delete.html", list=all_quizzes)
+                return render_template("remove.html", list=all_quizzes)
             if request.method == "POST":
                 users.check_csrf()
                 if "quiz" in request.form:
                     quiz = request.form["quiz"]
-                    quizzes.delete_quiz(quiz)
+                    quizzes.remove_quiz(quiz)
                 return redirect("/")
         return render_template("error.html", message="Sinulla ei ole oikeuksia poistaa kyselyitä", route="/")
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")

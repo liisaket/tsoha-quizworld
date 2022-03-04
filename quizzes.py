@@ -137,7 +137,7 @@ def create_choice(question_id, choice, correct):
     db.session.execute(sql, {"question_id":question_id, "content":choice, "correct":correct})
     db.session.commit()
 
-def delete_quiz(id):
+def remove_quiz(id):
     questions = get_questions(id)
     question_ids = [question[0] for question in questions]
     choices = get_choices(questions)
