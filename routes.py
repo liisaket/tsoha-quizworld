@@ -174,10 +174,12 @@ def result(id):
                 right_answers=right_answers)
         if quiz_type == 2:
             choices = quizzes.get_poll_choices(id)
+            message = False
             if id in undone_quizzes:
-                return render_template("result.html", topic=topic, quiz_type=quiz_type, questions=questions, \
-                    nmr_of_questions=nmr_of_questions, choices=choices, user_answers=user_answers, quiz_id=id, \
-                    message=True)
+                message = True
+            return render_template("result.html", topic=topic, quiz_type=quiz_type, questions=questions, \
+                nmr_of_questions=nmr_of_questions, choices=choices, user_answers=user_answers, quiz_id=id, \
+                message=message)
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
 
 @app.route("/stats")
