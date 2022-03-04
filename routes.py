@@ -178,7 +178,7 @@ def result(id):
                 return render_template("result.html", topic=topic, quiz_type=quiz_type, questions=questions, \
                     nmr_of_questions=nmr_of_questions, choices=choices, user_answers=user_answers, quiz_id=id, \
                     message=True)
-    return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
+    return render_template("error.html", message="Testi", route="/")
 
 @app.route("/stats")
 def stats():
