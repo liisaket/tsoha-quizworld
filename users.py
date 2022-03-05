@@ -33,6 +33,16 @@ def register(name, password, role):
         return False
     return login(name,password)
 
+def delete_user():
+    user = user_id()
+    sql = "DELETE FROM answers WHERE user_id=:user"
+    db.session.execute(sql, {"user":user})
+    db.session.commit()
+    sql = "DELETE FROM users WHERE id=:user"
+    db.session.execute(sql, {"user":user})
+    db.session.commit()
+    logout()
+
 def check_username(username):
     if len(username) < 1 or len(username) > 20:
         return False

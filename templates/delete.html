@@ -18,15 +18,20 @@
                 </ul>
             </div>
             <h3 class="new">Käyttäjätilin poistaminen</h3><br>
-            <p>Oletko varma, että haluat poistaa käyttäjäsi?</p><br>
+            <p>Oletko varma, että haluat poistaa käyttäjätilisi?</p>
+            <p>Tämä tarkoittaa, ettet voi enää kirjautua käyttäjälläsi Quiz-Wordliin.</p><br>
+            {% if message %}
+                <p class="errormessage" style="margin-top:0px;">
+                    Et painanut "Kyllä, olen varma"-nappulaa... Oletko nyt ihan varma?</p>
+                    <br>
+            {% endif %}
             <p class="choice">
-                <input type="radio" name="confirmation">Kyllä
+                <p><input type="radio" name="confirmation">Kyllä, olen varma</p>
             </p><br>
-            {% endfor %}
             <input type="submit" value="Poista käyttäjätili" class="loginBtn" style="margin-top:30px;">
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-            <div class="signup" style="margin-bottom:30px;">
-                <a href="/quizzes">Palaa takaisin</a>
+            <div class="signup">
+                <a href="/settings">Palaa takaisin</a>
             </div>
         {% endif %}
         </form>

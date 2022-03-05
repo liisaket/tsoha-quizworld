@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
-        <form action="/pick" method="post">
+        <form action="/logout">
             <h1>Quiz-World</h1>
             {% if session.user_id %}
             <div class="signup">
@@ -14,14 +14,17 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="/quizzes">Kyselyt</a></li>
                     <li><a href="/stats">Tilastot</a></li>
-                    <li><a href="/settings">Asetukset</a></li>
+                    <li>Asetukset</li>
                 </ul>
             </div>
-            <h3 class="new">Asetukset</h3>
-            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            <h3 class="new" style="margin-bottom:30px;">Asetukset</h3>
+            <p>Olet kirjautunut nimellä {{ session.username }}.</p>
+            <p>Rekisteröidyit Quiz-Wordliin {{ time.strftime("%d.%m.%Y") }} klo {{ time.strftime("%H:%M:%S") }}</p>
             <div class="signup" style="margin-bottom:30px;">
-                <a href="/quizzes">Palaa takaisin</a>
+                <a href="/delete">Poista käyttäjä</a>
             </div>
+            <br><br>
+            <input type="submit" value="Kirjaudu ulos" class="loginBtn">
         {% endif %}
         </form>
     </body>
