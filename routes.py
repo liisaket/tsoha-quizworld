@@ -221,19 +221,19 @@ def pick():
 def edit(id):
     if users.user_id():
         if users.require_role(2):
+            topic = quizzes.get_quiz_topic(id)
+            quiz_type = quizzes.get_quiz_type(id)
+            questions = quizzes.get_questions(id)
+            choices = quizzes.get_choices(questions)
+            message = ""
             if request.method == "GET":
-                topic = quizzes.get_quiz_topic(id)
-                quiz_type = quizzes.get_quiz_type(id)
-                questions = quizzes.get_questions(id)
                 nmr_of_questions = len(questions)
-                choices = quizzes.get_choices(questions)
                 nmr_of_choices = len(choices)
                 return render_template("edit.html", quiz_id=id, quiz_type=quiz_type, topic=topic, questions=questions, \
                 choices=choices, nmr_of_questions=nmr_of_questions, nmr_of_choices=nmr_of_choices)
             if request.method == "POST":
                 users.check_csrf()
                 newtopic = request.form["newtopic"]
-                quiz_type = request.form["quiz_type"]
                 newquestions = request.form.getlist("newquestion")
                 newchoices = request.form.getlist("newchoice")
                 nmr_of_choices = int(request.form["nmr_of_choices"])
@@ -241,17 +241,24 @@ def edit(id):
                 newcorrect = request.form.getlist("newcorrect")
                 old_questions = quizzes.get_questions(id)
                 choice_ids = [x[0] for x in quizzes.get_choices(old_questions)]
+                if newtopic == "" or len(topic) > 20:
+                    return render_template("edit.html", quiz_id=id, quiz_type=quiz_type, topic=topic, questions=questions, \
+                        choices=choices, nmr_of_questions=nmr_of_questions, nmr_of_choices=nmr_of_choices, \
+                        message="Kyselyn aiheessa tulee olla 1-20 merkkiä")
                 for question in newquestions:
                     if question == "" or len(question) > 50:
-                        return render_template("edit.html", quiz_type=quiz_type, questions=nmr_of_questions, \
-                            choices=nmr_of_choices, message="Kysymyksessä tulee olla 1-50 merkkiä")
+                        return render_template("edit.html", quiz_id=id, quiz_type=quiz_type, topic=topic, questions=questions, \
+                            choices=choices, nmr_of_questions=nmr_of_questions, nmr_of_choices=nmr_of_choices, \
+                            message="Kysymyksessä tulee olla 1-50 merkkiä")
                 for choice in newchoices:
                     if choice == "" or len(choice) > 50:
-                        return render_template("edit.html", quiz_type=quiz_type, questions=nmr_of_questions, \
-                            choices=nmr_of_choices, message="Vaihtoehdossa tulee olla 1-50 merkkiä")
+                        return render_template("edit.html", quiz_id=id, quiz_type=quiz_type, topic=topic, questions=questions, \
+                            choices=choices, nmr_of_questions=nmr_of_questions, nmr_of_choices=nmr_of_choices, \
+                            message="Vaihtoehdossa tulee olla 1-50 merkkiä")
                 if quiz_type == 1 and nmr_of_questions != len([x for x in newcorrect if x=="True"]):
-                    return render_template("edit.html", quiz_type=quiz_type, questions=nmr_of_questions, \
-                        choices=nmr_of_choices, message="Oikeita vastauksia tulee olla 1 per kysymys")
+                    return render_template("edit.html", quiz_id=id, quiz_type=quiz_type, topic=topic, questions=questions, \
+                        choices=choices, nmr_of_questions=nmr_of_questions, nmr_of_choices=nmr_of_choices, \
+                        message="Oikeita vastauksia tulee olla 1 per kysymys")
                 quiz_id = quizzes.edit_topic(id, newtopic)
                 i = 0
                 for question in newquestions:
