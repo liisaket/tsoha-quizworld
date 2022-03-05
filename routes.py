@@ -206,14 +206,15 @@ def stats():
 def pick():
     if users.user_id():
         if users.require_role(2):
+            all_quizzes = quizzes.get_all_quizzes()
             if request.method == "GET":
-                all_quizzes = quizzes.get_all_quizzes()
                 return render_template("pick.html", list=all_quizzes)
             if request.method == "POST":
                 users.check_csrf()
                 if "quiz" in request.form:
                     id = request.form["quiz"]
-                return redirect("/edit/" + str(id))
+                    return redirect("/edit/" + str(id))
+                return render_template("pick.html", list=all_quizzes, message=True)
         return render_template("error.html", message="Sinulla ei ole oikeuksia muokata kyselyitä", route="/")
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
 
