@@ -14,23 +14,20 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="/quizzes">Kyselyt</a></li>
                     <li><a href="/stats">Tilastot</a></li>
-                    <li><a href="/account">Asetukset</a></li>
+                    <li><a href="/settings">Asetukset</a></li>
                 </ul>
             </div>
-            {% if session.role == 2 %}
-            <h3 class="new">Kyselyn poistaminen</h3><br>
-            <p>Minkä kyselyn haluat poistaa?</p><br>
-            {% for quiz in list %}
-                <p class="choice">
-                    <input type="radio" name="quiz" value="{{ quiz.id }}">{{ quiz.topic }}
-                </p><br>
+            <h3 class="new">Käyttäjätilin poistaminen</h3><br>
+            <p>Oletko varma, että haluat poistaa käyttäjäsi?</p><br>
+            <p class="choice">
+                <input type="radio" name="confirmation">Kyllä
+            </p><br>
             {% endfor %}
-            <input type="submit" value="Poista kysely" class="loginBtn" style="margin-top:30px;">
+            <input type="submit" value="Poista käyttäjätili" class="loginBtn" style="margin-top:30px;">
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             <div class="signup" style="margin-bottom:30px;">
                 <a href="/quizzes">Palaa takaisin</a>
             </div>
-        {% endif %}
         {% endif %}
         </form>
     </body>
