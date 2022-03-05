@@ -36,6 +36,10 @@
             </div>
             {% endif %}
             <p class="quizzes">Tietovisat:</p>
+            {% if nmr_quizzes == 0 %}
+            <br>
+            <p>Sovelluksessa ei ole tällä hetkellä tietovisoja.</p>
+            {% endif %}
             {% for quiz in available_quizzes %}
                 <div class="quizlink">
                 <ul.a>
@@ -45,6 +49,10 @@
             {% endfor %}
             <br>
             <p class="quizzes">Mielipidekyselyt:</p>
+            {% if nmr_polls == 0 %}
+            <br>
+            <p>Sovelluksessa ei ole tällä hetkellä mielipidekyselyitä.</p>
+            {% endif %}
             {% for poll in available_polls %}
                 <div class="quizlink">
                 <ul.a>

@@ -20,6 +20,11 @@
             {% if session.role == 2 %}
             <h3 class="new">Kyselyn muokkaaminen</h3><br>
             <p>Mitä kyselyä haluat muokata?</p><br>
+            {% if message %}
+                <p class="errormessage" style="margin-top:0px;">
+                    Valitse ensin kysely, jota haluat muokata.</p>
+                    <br>
+            {% endif %}
             {% for quiz in list %}
                 <p class="choice">
                     <input type="radio" name="quiz" value="{{ quiz.id }}">{{ quiz.topic }}
