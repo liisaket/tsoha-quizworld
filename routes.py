@@ -104,6 +104,14 @@ def create():
         nmr_of_choices = int(request.form["choices"])
         nmr_of_questions = int(request.form["nmr_of_questions"])
         correct = request.form.getlist("correct")
+        for question in questions:
+            if question == "" or len(question) > 50:
+                return render_template("newquiz.html", quiz_type=quiz_type, questions=nmr_of_questions, \
+                    choices=nmr_of_choices, message="Kysymyksessä tulee olla 1-50 merkkiä")
+        for choice in choices:
+            if choice == "" or len(choice) > 50:
+                return render_template("newquiz.html", quiz_type=quiz_type, questions=nmr_of_questions, \
+                    choices=nmr_of_choices, message="Vaihtoehdossa tulee olla 1-50 merkkiä")
         if quiz_type == 1 and nmr_of_questions != len([x for x in correct if x=="True"]):
             return render_template("newquiz.html", quiz_type=quiz_type, questions=nmr_of_questions, \
                 choices=nmr_of_choices, message="Oikeita vastauksia tulee olla 1 per kysymys")
@@ -233,8 +241,16 @@ def edit(id):
                 newcorrect = request.form.getlist("newcorrect")
                 old_questions = quizzes.get_questions(id)
                 choice_ids = [x[0] for x in quizzes.get_choices(old_questions)]
+                for question in newquestions:
+                    if question == "" or len(question) > 50:
+                        return render_template("edit.html", quiz_type=quiz_type, questions=nmr_of_questions, \
+                            choices=nmr_of_choices, message="Kysymyksessä tulee olla 1-50 merkkiä")
+                for choice in newchoices:
+                    if choice == "" or len(choice) > 50:
+                        return render_template("edit.html", quiz_type=quiz_type, questions=nmr_of_questions, \
+                            choices=nmr_of_choices, message="Vaihtoehdossa tulee olla 1-50 merkkiä")
                 if quiz_type == 1 and nmr_of_questions != len([x for x in newcorrect if x=="True"]):
-                    return render_template("newquiz.html", quiz_type=quiz_type, questions=nmr_of_questions, \
+                    return render_template("edit.html", quiz_type=quiz_type, questions=nmr_of_questions, \
                         choices=nmr_of_choices, message="Oikeita vastauksia tulee olla 1 per kysymys")
                 quiz_id = quizzes.edit_topic(id, newtopic)
                 i = 0
@@ -251,20 +267,35 @@ def edit(id):
 def remove():
     if users.user_id():
         if users.require_role(2):
+            all_quizzes = quizzes.get_all_quizzes()
             if request.method == "GET":
-                all_quizzes = quizzes.get_all_quizzes()
                 return render_template("remove.html", list=all_quizzes)
             if request.method == "POST":
                 users.check_csrf()
                 if "quiz" in request.form:
                     quiz = request.form["quiz"]
                     quizzes.remove_quiz(quiz)
-                return redirect("/")
+                    return redirect("/")
+                return render_template("remove.html", list=all_quizzes, message=True)
         return render_template("error.html", message="Sinulla ei ole oikeuksia poistaa kyselyitä", route="/")
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
 
-@app.route("/delete")
+@app.route("/settings")
+def settings():
+    if users.user_id():
+        time = users.registration_time()
+        return render_template("settings.html", time=time)
+    return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
+
+@app.route("/delete", methods=["GET", "POST"])
 def delete():
     if users.user_id():
-        return render_template("delete.html")
+        if request.method == "GET":
+            return render_template("delete.html")
+        if request.method == "POST":
+            users.check_csrf()
+            if "confirmation" in request.form:
+                users.delete_user()
+                return redirect("/")
+            return render_template("delete.html", message=True)
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
