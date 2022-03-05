@@ -18,16 +18,18 @@
                 </ul>
             </div>
                 {% if quiz_type==1 %}
-                <h3 class="newquiz">Tietovisan tulokset:</h3>
-                <h3 class="topic">{{ topic }}</h3>
                 {% if message %}
                     <br>
+                    <h3 class="error">Virhe:</h3>
                     <p>Tietojen mukaan et ole vielä vastannut tähän kyselyyn.</p>
                     <p>Voit vastata siihen täällä:</p>
                     <div class="quizlink" style="text-align:center;">
                         <a href="/quiz/{{ quiz_id }}">{{ topic }}</a>
                     </div>
+                    <br>
                 {% else %}
+                <h3 class="newquiz">Tietovisan tulokset:</h3>
+                <h3 class="topic">{{ topic }}</h3>
                 <p class="result">Sait {{ right_answers }} / {{ nmr_of_questions }} oikein!</p>
                 {% for i in range(nmr_of_questions) %}
                     <p class="questions">{{ i+1 }}. {{ questions[i][1] }}</p>

@@ -17,6 +17,19 @@
                     <li><a href="/settings">Asetukset</a></li>
                 </ul>
             </div>
+            {% if message %}
+                <h3 class="error">Virhe:</h3>
+                <br>
+                <p>Tietojen mukaan olet jo vastannut tähän kyselyyn.</p>
+                <p>Voit nähdä kyselyn tilastot täältä:</p>
+                <div class="quizlink" style="text-align:center;">
+                    <a href="/result/{{ quiz_id }}">{{ topic }}</a>
+                </div>
+                <br><br>
+                <div class="signup" style="margin-bottom:20px;">
+                    <a href="/quizzes">Palaa takaisin</a>
+                </div>
+            {% else %}
             {% if quiz_type==1 %}
             <h3 class="newquiz">Vastaa tietovisaan:</h3>
             {% else %}
@@ -24,9 +37,6 @@
             {% endif %}
             <h3 class="topic">{{ topic }}</h3>
             <p style="margin:20px;">Muista, voit vastata kyselyihin vain kerran.</p>
-            {% if message %}
-                <p class="errormessage">Virhe: {{ message }}</p>
-            {% endif %}
             {% for i in range(nmr_of_questions) %}
                 <input type="hidden" name="question" value="{{ questions[i][0] }}">
                 <p class="questions">{{ i+1 }}. {{ questions[i][1] }}</p>
@@ -45,6 +55,7 @@
         <div class="signup" style="margin-bottom:20px;">
             <a href="/quizzes">Palaa takaisin</a>
         </div>
+        {% endif %}
         {% endif %}
         </form>
     </body>

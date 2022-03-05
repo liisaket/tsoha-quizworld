@@ -130,7 +130,7 @@ def quiz(id):
     if users.user_id():
         topic = quizzes.get_quiz_topic(id)
         if id in [x[1] for x in quizzes.get_done_quizzes()]:
-            return render_template("error.html", message=f"Olet jo vastannut kyselyyn '{topic}'", route="/quizzes")
+            return render_template("quiz.html", quiz_id=id, topic=topic, message=True)
         quiz_type = quizzes.get_quiz_type(id)
         questions = quizzes.get_questions(id)
         nmr_of_questions = len(questions)
