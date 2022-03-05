@@ -122,7 +122,7 @@ def quiz(id):
     if users.user_id():
         topic = quizzes.get_quiz_topic(id)
         if id in [x[1] for x in quizzes.get_done_quizzes()]:
-            return render_template("error.html", message=f"Olet jo vastannut kyselyyn {topic}", route="/quizzes")
+            return render_template("error.html", message=f"Olet jo vastannut kyselyyn '{topic}'", route="/quizzes")
         quiz_type = quizzes.get_quiz_type(id)
         questions = quizzes.get_questions(id)
         nmr_of_questions = len(questions)
@@ -261,4 +261,10 @@ def remove():
                     quizzes.remove_quiz(quiz)
                 return redirect("/")
         return render_template("error.html", message="Sinulla ei ole oikeuksia poistaa kyselyitä", route="/")
+    return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
+
+@app.route("/delete")
+def delete():
+    if users.user_id():
+        return render_template("delete.html")
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
