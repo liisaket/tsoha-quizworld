@@ -31,24 +31,26 @@
                 <h3 class="newquiz">Tietovisan tulokset:</h3>
                 <h3 class="topic">{{ topic }}</h3>
                 <p class="result">Sait {{ right_answers }} / {{ nmr_of_questions }} oikein!</p>
+                <p>Kysymyksen oikea vastaus näkyy vihreällä.</p>
+                <p>Nyt näet myös, mitä Quiz-Worldlin muut käyttäjät ovat vastanneet näihin kiperiin kysymyksiin!</p>
                 {% for i in range(nmr_of_questions) %}
                     <p class="questions">{{ i+1 }}. {{ questions[i][1] }}</p>
                     {% for choice in choices %}
                         {% if choice[2] == questions[i][0] and choice[3] == True and choice[0] in user_answers %}
                             <p class="choice" style="font-weight: 500; color:rgb(203, 253, 203);">
-                            <input type="radio" name="{{ questions[i][0] }}" checked> {{ choice[1] }}
+                            <input type="radio" name="{{ questions[i][0] }}" checked> {{ choice[1] }}: {{ choice.count }} kpl
                             </p><br>
                         {% elif choice[2] == questions[i][0] and choice[3] == True %}
                             <p class="choice" style="font-weight: 500; color:rgb(203, 253, 203);">
-                            <input type="radio" name="{{ questions[i][0] }}" disabled> {{ choice[1] }}
+                            <input type="radio" name="{{ questions[i][0] }}" disabled> {{ choice[1] }}: {{ choice.count }} kpl
                             </p><br>
                         {% elif choice[2] == questions[i][0] and choice[0] in user_answers %}
                             <p class="choice">
-                            <input type="radio" name="{{ questions[i][0] }}" checked> {{ choice[1] }}
+                            <input type="radio" name="{{ questions[i][0] }}" checked> {{ choice[1] }}: {{ choice.count }} kpl
                             </p><br>
                         {% elif choice[2] == questions[i][0] %}
                             <p class="choice">
-                            <input type="radio" name="{{ questions[i][0] }}" disabled> {{ choice[1] }}
+                            <input type="radio" name="{{ questions[i][0] }}" disabled> {{ choice[1] }}: {{ choice.count }} kpl
                             </p><br>
                         {% endif %}
                     {% endfor %}

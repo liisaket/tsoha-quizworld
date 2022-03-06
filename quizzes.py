@@ -61,7 +61,9 @@ def get_questions(id):
 
 def get_choices(questions):
     question_ids = [question[0] for question in questions]
-    sql = "SELECT id, content, question_id, correct FROM choices WHERE question_id IN :questions"
+    sql = "SELECT c.id, c.content, c.question_id, c.correct, COUNT(a.id) FROM choices c \
+        LEFT JOIN answers a ON c.id=a.choice_id \
+        WHERE c.question_id IN :questions GROUP BY c.id ORDER BY c.id"
     result = db.session.execute(sql, {"questions":tuple(question_ids)})
     return result.fetchall()
 
