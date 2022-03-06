@@ -146,7 +146,6 @@ def answer():
         quiz_id = request.form["quiz_id"]
         question_ids = request.form.getlist("question")
         choice_ids = [request.form[question] for question in question_ids if question in request.form]
-        print(choice_ids)
         errormessage = ""
         if not choice_ids:
             errormessage = "Et täyttänyt kyselyä!"
