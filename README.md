@@ -36,7 +36,8 @@ Tilastoista voi tutkia tehtyjen kyselyiden tuloksia ja tilastoja.
   asiasta ilmoitus ja linkki kyselyyn, sekä kyselyn tilastot). Tietovisan tuloksia voi tutkia vain, jos on vastannut kyseiseen kyselyyn.
   Jos yrittää nähdä tietovisan tulokset ilman, että on tehnyt kyselyn, tulee virheilmoitus samalle sivulle ja linkki kyselyyn.
   Tietovisan tuloksissa oikea vastaus näkyy lihavoituna ja vihreällä, ja käyttäjän oma valinta näkyy valitussa "pallerossa".
-  Mielipidekyselyn tilastoissa näkyy kuinka monta kappaletta vastauksia on missäkin vaihtoehdossa.</li>
+  Mielipidekyselyn tilastoissa näkyy kuinka monta kappaletta vastauksia on missäkin vaihtoehdossa.
+  Uutena ominaisuutena nyt myös tietovisan tuloksissa näkyy kuinka monta kappaletta vastauksia on missäkin vaihtoehdossa!</li>
 <li>Asetukset: sivulla näkyy oma käyttäjätunnus ja rekisteröintiaika. Sivulta pääsee poistamaan käyttäjätilin.</li>
  <ul>
   <li>Poista käyttäjä: ensin kysytään varmistus, ja jos sitä ei anna, samalle sivulle tulee virheilmoitus. "Poista käyttäjätili" poistaa
