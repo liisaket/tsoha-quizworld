@@ -37,6 +37,9 @@
             {% endif %}
             <h3 class="topic">{{ topic }}</h3>
             <p style="margin:20px;">Muista, voit vastata kyselyihin vain kerran.</p>
+            {% if errormessage != "" %}
+                <p class="errormessage">{{ errormessage }}</p>
+            {% endif %}
             {% for i in range(nmr_of_questions) %}
                 <input type="hidden" name="question" value="{{ questions[i][0] }}">
                 <p class="questions">{{ i+1 }}. {{ questions[i][1] }}</p>

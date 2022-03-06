@@ -146,19 +146,20 @@ def answer():
         quiz_id = request.form["quiz_id"]
         question_ids = request.form.getlist("question")
         choice_ids = [request.form[question] for question in question_ids if question in request.form]
-        message = ""
+        print(choice_ids)
+        errormessage = ""
         if not choice_ids:
-            message = "Et täyttänyt kyselyä!"
-        if len(choice_ids) != len(question_ids):
-            message = "Et täyttänyt kyselyä loppuun asti!"
-        if message != "":
+            errormessage = "Et täyttänyt kyselyä!"
+        elif len(choice_ids) != len(question_ids):
+            errormessage = "Et täyttänyt kyselyä loppuun asti!"
+        if errormessage != "":
             topic = quizzes.get_quiz_topic(quiz_id)
             quiz_type = quizzes.get_quiz_type(quiz_id)
             questions = quizzes.get_questions(quiz_id)
             nmr_of_questions = len(questions)
             choices = quizzes.get_choices(questions)
             return render_template("quiz.html", quiz_id=quiz_id, quiz_type=quiz_type, topic=topic, questions=questions, choices=choices, \
-                nmr_of_questions=nmr_of_questions, message=message)
+                nmr_of_questions=nmr_of_questions, errormessage=errormessage)
         quizzes.store_user_answers(choice_ids)
         return redirect("/result/" + str(quiz_id))
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
