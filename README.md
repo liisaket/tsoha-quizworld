@@ -46,5 +46,6 @@ Tilastoista voi tutkia tehtyjen kyselyiden tuloksia ja tilastoja.
 <li>Csrf-suojaus on otettu huomioon.</li>
 </ul>
 
-Tässä osoitteessa on toimiva sovellukseni:
-https://tsoha-quizworld.herokuapp.com/
+Tässä osoitteessa oli sovellukseni:
+https://tsoha-quizworld.herokuapp.com/</br>
+[ei toiminnassa, koska Herokun palvelut eivät ole enää saatavilla]
