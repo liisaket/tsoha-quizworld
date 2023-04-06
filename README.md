@@ -1,9 +1,13 @@
-# tsoha-quizworld
-<h2>Tietokantasovellus: Quiz-World (lopullinen palautus)</h2>
+<h1>Tietokantasovellus: Quiz-World</h1>
+
+Sovellus osoitteessa:
+https://tsoha-quizworld.fly.dev/
+
+![etusivu](./kuvat/quizworld_etusivu.png)
 
 <h3>Lyhyesti:</h3>
-Sovellukseni on Quiz-World: paikka, jossa voi vastata tietovisoihin ja mielipidekyselyihin.<br>
-Ylläpitäjänä voi luoda uusia kyselyitä, sekä muokata tai poistaa olemassa olevia kyselyitä.<br>
+Sovellukseni on Quiz-World: paikka, jossa rekisteröityneet käyttäjät voivat vastata tietovisoihin ja mielipidekyselyihin.<br>
+Ylläpitäjänä voit luoda uusia kyselyitä, sekä muokata tai poistaa olemassa olevia kyselyitä.<br>
 Tilastoista voi tutkia tehtyjen kyselyiden tuloksia ja tilastoja.
 
 <h3>Tarkemmin toiminnoista:</h3>
@@ -46,6 +50,5 @@ Tilastoista voi tutkia tehtyjen kyselyiden tuloksia ja tilastoja.
 <li>Csrf-suojaus on otettu huomioon.</li>
 </ul>
 
-Tässä osoitteessa oli sovellukseni:
-https://tsoha-quizworld.herokuapp.com/</br>
-[ei toiminnassa, koska Herokun palvelut eivät ole enää saatavilla]
+Tässä osoitteessa on toimiva sovellukseni (06.04.2023):
+https://tsoha-quizworld.fly.dev/
