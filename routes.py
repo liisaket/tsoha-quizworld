@@ -3,9 +3,18 @@ from app import app
 import users
 import quizzes
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("index.html")
+    if request.method == "GET":
+        return render_template("index.html")
+
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        if not users.login(username, password):
+            return render_template("index.html", message="Väärä käyttäjätunnus tai salasana, yritä uudelleen!")
+        return redirect("/")
 
 @app.route("/quizzes")
 def available_quizzes():
@@ -20,19 +29,6 @@ def available_quizzes():
             available_quizzes=available_quizzes, available_polls=available_polls, nmr_quizzes=nmr_quizzes, \
             nmr_polls=nmr_polls, done_quizzes=done_quizzes)
     return render_template("error.html", message="Et ole kirjautunut sisään", route="/")
-
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "GET":
-        return render_template("index.html")
-
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-
-        if not users.login(username, password):
-            return render_template("index.html", message="Väärä käyttäjätunnus tai salasana, yritä uudelleen!")
-        return redirect("/")
 
 @app.route("/logout")
 def logout():
