@@ -14,7 +14,7 @@ def index():
 
         if not users.login(username, password):
             return render_template("index.html", message="Väärä käyttäjätunnus tai salasana, yritä uudelleen!")
-        return redirect("/")
+        return render_template("index.html")
 
 @app.route("/quizzes")
 def available_quizzes():
