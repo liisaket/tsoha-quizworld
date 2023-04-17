@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, session, abort
+from flask import render_template, request, redirect, session
 from app import app
 import users
 import quizzes
