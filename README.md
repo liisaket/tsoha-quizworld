@@ -49,6 +49,3 @@ Tilastoista voi tutkia tehtyjen kyselyiden tuloksia ja tilastoja.
  </ul>
 <li>Csrf-suojaus on otettu huomioon.</li>
 </ul>
-
-Tässä osoitteessa on toimiva sovellukseni (06.04.2023):
-https://tsoha-quizworld.fly.dev/
