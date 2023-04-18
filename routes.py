@@ -1,7 +1,10 @@
 from flask import render_template, request, redirect, session
 from app import app
+from sqlalchemy import create_engine
 import users
 import quizzes
+
+engine = create_engine(getenv("DATABASE_URL").replace("://", "ql://", 1), pool_pre_ping=True)
 
 @app.route("/")
 def index():
